@@ -2,13 +2,13 @@
 .*
 
 # Node + typechain files
-node_modules
 coverage
 coverage.json
+node_modules
 typechain
 typechain-types
 
 # Hardhat files
-cache
+abi
 artifacts
-
+cache

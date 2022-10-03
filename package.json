@@ -13,6 +13,12 @@
     "engines": {
         "node": ">=11"
     },
+    "scripts": {
+        "compile": "hardhat compile",
+        "postcompile": "./scripts/postcompile.sh",
+        "clean": "hardhat clean && rm -rf abi",
+        "prepublish": "yarn clean && yarn compile"
+    },
     "devDependencies": {
         "@ethersproject/abi": "^5.7.0",
         "@ethersproject/bytes": "^5.7.0",
