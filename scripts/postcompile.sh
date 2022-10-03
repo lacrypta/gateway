@@ -23,9 +23,9 @@ while builtin read -r contract; do
     newFileName="${newFileName%.sol}.json"
 
     newDirName="${newFileName%/*}"
-    "${THE_MKDIR}" -p -- "${newDirName}"
+    "${THE_MKDIR}" -p "${newDirName}"
 
     abiFileName="artifacts/${contract}/${contract##*/}"
     abiFileName="${abiFileName%.sol}.json"
-    "${THE_CP}" --force --target-directory="${newDirName}" -- "${abiFileName}"
+    "${THE_CP}" -f "${abiFileName}" "${newDirName}"
 done < <("${THE_FIND}" 'contracts' -type f -iname '*.sol')
