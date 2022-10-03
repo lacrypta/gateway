@@ -1,12 +1,14 @@
+# Hidden files
 .*
 
+# Node + typechain files
 node_modules
 coverage
 coverage.json
 typechain
 typechain-types
 
-#Hardhat files
+# Hardhat files
 cache
 artifacts
 
