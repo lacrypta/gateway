@@ -1,46 +1,50 @@
 {
-    "name": "lacrypta-gateway",
-    "version": "0.8.2",
-    "license": "AGPL-3.0-or-later",
-    "homepage": "https://lacrypta.com.ar/",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/lacrypta/gateway.git"
-    },
-    "bugs": {
-        "url": "https://github.com/lacrypta/gateway/issues"
-    },
-    "engines": {
-        "node": ">=11"
-    },
-    "scripts": {
-        "compile": "hardhat compile",
-        "postcompile": "./scripts/postcompile.sh",
-        "clean": "hardhat clean && rm -rf abi",
-        "prepublish": "yarn clean && yarn compile"
-    },
-    "devDependencies": {
-        "@ethersproject/abi": "^5.7.0",
-        "@ethersproject/bytes": "^5.7.0",
-        "@ethersproject/providers": "^5.7.1",
-        "@nomicfoundation/hardhat-chai-matchers": "^1.0.3",
-        "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
-        "@nomicfoundation/hardhat-toolbox": "^1.0.2",
-        "@nomiclabs/hardhat-ethers": "^2.1.1",
-        "@nomiclabs/hardhat-etherscan": "^3.1.0",
-        "@openzeppelin/contracts": "^4.7.3",
-        "@typechain/ethers-v5": "^10.1.0",
-        "@typechain/hardhat": "^6.1.3",
-        "@types/chai": "^4.3.3",
-        "@types/mocha": "^9.1.1",
-        "@types/node": "^18.7.18",
-        "chai": "^4.3.6",
-        "ethers": "^5.7.1",
-        "hardhat": "^2.11.1",
-        "hardhat-gas-reporter": "^1.0.9",
-        "solidity-coverage": "^0.7.22",
-        "ts-node": "^10.9.1",
-        "typechain": "^8.1.0",
-        "typescript": "^4.8.3"
-    }
+  "name": "lacrypta-gateway",
+  "version": "0.8.3",
+  "license": "AGPL-3.0-or-later",
+  "homepage": "https://lacrypta.com.ar/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lacrypta/gateway.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lacrypta/gateway/issues"
+  },
+  "engines": {
+    "node": ">=11"
+  },
+  "files": [
+    "/abi",
+    "/contracts"
+  ],
+  "scripts": {
+    "compile": "hardhat compile",
+    "postcompile": "./scripts/postcompile.sh",
+    "clean": "hardhat clean && rm -rf abi",
+    "prepublish": "yarn clean && yarn compile"
+  },
+  "devDependencies": {
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/bytes": "^5.7.0",
+    "@ethersproject/providers": "^5.7.1",
+    "@nomicfoundation/hardhat-chai-matchers": "^1.0.3",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.6",
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
+    "@nomiclabs/hardhat-ethers": "^2.1.1",
+    "@nomiclabs/hardhat-etherscan": "^3.1.0",
+    "@openzeppelin/contracts": "^4.7.3",
+    "@typechain/ethers-v5": "^10.1.0",
+    "@typechain/hardhat": "^6.1.3",
+    "@types/chai": "^4.3.3",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^18.7.18",
+    "chai": "^4.3.6",
+    "ethers": "^5.7.1",
+    "hardhat": "^2.11.1",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solidity-coverage": "^0.7.22",
+    "ts-node": "^10.9.1",
+    "typechain": "^8.1.0",
+    "typescript": "^4.8.3"
+  }
 }
