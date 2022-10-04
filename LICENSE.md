@@ -109,10 +109,10 @@ You may convey a work based on the Program, or the modifications to produce it f
 
 1. The work must carry prominent notices stating that you modified it, and giving a relevant date.
 2. The work must carry prominent notices stating that it is released under this License and any conditions added under [section 7](#7-additional-terms).
-This requirement modifies the requirement in [section 4](#4-conveying-verbatim-copies) to _keep intact all notices_.
+   This requirement modifies the requirement in [section 4](#4-conveying-verbatim-copies) to _keep intact all notices_.
 3. You must license the entire work, as a whole, under this License to anyone who comes into possession of a copy.
-This License will therefore apply, along with any applicable [section 7](#7-additional-terms) additional terms, to the whole of the work, and all its parts, regardless of how they are packaged.
-This License gives no permission to license the work in any other way, but it does not invalidate such permission if you have separately received it.
+   This License will therefore apply, along with any applicable [section 7](#7-additional-terms) additional terms, to the whole of the work, and all its parts, regardless of how they are packaged.
+   This License gives no permission to license the work in any other way, but it does not invalidate such permission if you have separately received it.
 4. If the work has interactive user interfaces, each must display Appropriate Legal Notices; however, if the Program has interactive interfaces that do not display Appropriate Legal Notices, your work need not make them do so.
 
 A compilation of a covered work with other separate and independent works, which are not by their nature extensions of the covered work, and which are not combined with it such as to form a larger program, in or on a volume of a storage or distribution medium, is called an _aggregate_ if the compilation and its resulting copyright are not used to limit the access or legal rights of the compilation's users beyond what the individual works permit.
@@ -125,11 +125,11 @@ You may convey a covered work in object code form under the terms of [sections 4
 1. Convey the object code in, or embodied in, a physical product (including a physical distribution medium), accompanied by the Corresponding Source fixed on a durable physical medium customarily used for software interchange.
 2. <a id="6b"></a><!-- markdownlint-disable-line MD033 -->Convey the object code in, or embodied in, a physical product (including a physical distribution medium), accompanied by a written offer, valid for at least three years and valid for as long as you offer spare parts or customer support for that product model, to give anyone who possesses the object code either **(1)** a copy of the Corresponding Source for all the software in the product that is covered by this License, on a durable physical medium customarily used for software interchange, for a price no more than your reasonable cost of physically performing this conveying of source, or **(2)** access to copy the Corresponding Source from a network server at no charge.
 3. Convey individual copies of the object code with a copy of the written offer to provide the Corresponding Source.
-This alternative is allowed only occasionally and noncommercially, and only if you received the object code with such an offer, in accord with [subsection 6.2](#6b).
+   This alternative is allowed only occasionally and noncommercially, and only if you received the object code with such an offer, in accord with [subsection 6.2](#6b).
 4. <a id="6d"></a><!-- markdownlint-disable-line MD033 -->Convey the object code by offering access from a designated place (gratis or for a charge), and offer equivalent access to the Corresponding Source in the same way through the same place at no further charge.
-You need not require recipients to copy the Corresponding Source along with the object code.
-If the place to copy the object code is a network server, the Corresponding Source may be on a different server (operated by you or a third party) that supports equivalent copying facilities, provided you maintain clear directions next to the object code saying where to find the Corresponding Source.
-Regardless of what server hosts the Corresponding Source, you remain obligated to ensure that it is available for as long as needed to satisfy these requirements.
+   You need not require recipients to copy the Corresponding Source along with the object code.
+   If the place to copy the object code is a network server, the Corresponding Source may be on a different server (operated by you or a third party) that supports equivalent copying facilities, provided you maintain clear directions next to the object code saying where to find the Corresponding Source.
+   Regardless of what server hosts the Corresponding Source, you remain obligated to ensure that it is available for as long as needed to satisfy these requirements.
 5. Convey the object code using peer-to-peer transmission, provided you inform other peers where the object code and Corresponding Source of the work are being offered to the general public at no charge under [subsection 6.4](#6d).
 
 A separable portion of the object code, whose source code is excluded from the Corresponding Source as a System Library, need not be included in conveying the object code work.
@@ -287,17 +287,17 @@ It is safest to attach them to the start of each source file to most effectively
 
 >     <one line to give the program's name and a brief idea of what it does.>
 >     Copyright (C) <year>  <name of author>
-> 
+>
 >     This program is free software: you can redistribute it and/or modify
 >     it under the terms of the GNU Affero General Public License as published
 >     by the Free Software Foundation, either version 3 of the License, or
 >     (at your option) any later version.
-> 
+>
 >     This program is distributed in the hope that it will be useful,
 >     but WITHOUT ANY WARRANTY; without even the implied warranty of
 >     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 >     GNU Affero General Public License for more details.
-> 
+>
 >     You should have received a copy of the GNU Affero General Public License
 >     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
