@@ -24,7 +24,9 @@ abstract contract Gateway is Context, EIP712, ERC165, IGateway {
     mapping(uint32 => HandlerEntry) private voucherHandler;
 
     // typehash associated to the gateway Voucher itself
-    bytes32 public constant override VOUCHER_TYPEHASH = keccak256(bytes("Voucher{uint32,uint256,uint256,bytes,bytes}"));
+    //
+    // This is computed using the "encodeType" convention laid out in <https://eips.ethereum.org/EIPS/eip-712#definition-of-encodetype>.
+    bytes32 public constant override VOUCHER_TYPEHASH = keccak256(bytes("Voucher(uint32 tag,uint256 nonce,uint256 deadline,bytes payload,bytes metadata)"));
 
     // Set of voucher hashes served
     mapping(bytes32 => bool) public override voucherServed;

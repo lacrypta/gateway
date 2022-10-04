@@ -14,7 +14,10 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
     string public override name;
 
     // Tag associated to the TransferFromVoucher
-    uint32 public constant TRANSFER_FROM_VOUCHER_TAG = uint32(bytes4(keccak256(bytes("TransferFromVoucher{address,address,uint256}"))));
+    //
+    // This is computed using the "encodeType" convention laid out in <https://eips.ethereum.org/EIPS/eip-712#definition-of-encodetype>.
+    // Note that it is not REQUIRED to be so computed, but we do so anyways to minimize encoding conventions.
+    uint32 public constant TRANSFER_FROM_VOUCHER_TAG = uint32(bytes4(keccak256(bytes("TransferFromVoucher(address from,address to,uint256 amount)"))));
 
     /**
      * Build a new ERC20Gateway from the given token address and gateway name

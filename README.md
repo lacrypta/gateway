@@ -34,7 +34,7 @@ The current implementation consists of:
 Creating a new Gateway capable of dealing with a new voucher type is extremely simple, you merely need to:
 
 1. Create a new contract and inherit from the Gateway of your choice (so as to support ERC20 or ERC20-Permit vouchers as well, or none of them and have a simpler interface).
-2. Define the tags your new contract will be handling. This is straightforward and can be done simply by `uint32(bytes4(keccak256(bytes("..."))))`, where `"..."` will be something along the lines of `"MyVoucher{primitiveType1,primitiveType2,...,primitiveTypeN}"`.
+2. Define the tags your new contract will be handling. This is straightforward and can be done simply by `uint32(bytes4(keccak256(bytes("..."))))`, where `"..."` will be something along the lines of `"MyVoucher(primitiveType1 fieldName1,primitiveType2 fieldName2,...,primitiveTypeN fieldNameN)"`.
 3. In your `constructor` call the `_addHandler()` method to register the tag you generated as being handled by using the given methods (two are needed: one to determine the signer from the voucher's payload, and another one to actually execute the call).
 
 As many tags as desired can be handled within the same contract, since each `_addHandler` call assigns a pair of handling methods to a tag.

@@ -9,8 +9,11 @@ import {IERC20PermitGateway} from "./IERC20PermitGateway.sol";
 
 abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
     // Tag associated to the PermitVoucher
+    //
+    // This is computed using the "encodeType" convention laid out in <https://eips.ethereum.org/EIPS/eip-712#definition-of-encodetype>.
+    // Note that it is not REQUIRED to be so computed, but we do so anyways to minimize encoding conventions.
     uint32 public constant override PERMIT_VOUCHER_TAG =
-        uint32(bytes4(keccak256(bytes("PermitVoucher{address,address,uint256,uint256,uint8,bytes32,bytes32}"))));
+        uint32(bytes4(keccak256(bytes("PermitVoucher(address owner,address spender,uint256 value,uint256 deadline,uint8 v,bytes32 r,bytes32 s)"))));
 
     /**
      * Build a new ERC20PermitGateway from the given token address and gateway name
