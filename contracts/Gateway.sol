@@ -125,7 +125,14 @@ abstract contract Gateway is Context, EIP712, ERC165, IGateway {
      * @return voucherHash  The voucher hash associated to the given voucher
      */
     function _hashVoucher(Voucher memory voucher) internal view returns (bytes32 voucherHash) {
-        voucherHash = _hashTypedDataV4(keccak256(abi.encode(VOUCHER_TYPEHASH, voucher)));
+        voucherHash = _hashTypedDataV4(keccak256(abi.encode(
+            VOUCHER_TYPEHASH,
+            voucher.tag,
+            voucher.nonce,
+            voucher.deadline,
+            keccak256(voucher.payload),
+            keccak256(voucher.metadata)
+        )));
     }
 
     /**
