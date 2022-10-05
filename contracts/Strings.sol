@@ -34,6 +34,27 @@ library Strings {
     }
 
     /**
+     * Convert the given uint value to string, where as many decimal digits are used as given
+     *
+     * @param value  The value to convert to string
+     * @param decimals  The number of decimal places to use
+     * @return  The resulting string
+     */
+    function toString(uint256 value, uint8 decimals) external pure returns (string memory) {
+        uint256 decimalPart = value % 10**decimals;
+        uint256 integerPart = value / 10**decimals;
+        if (0 != decimalPart) {
+            return string.concat(
+                _toString(integerPart),
+                '.',
+                _toString(decimalPart)
+            );
+        } else {
+            return _toString(integerPart);
+        }
+    }
+
+    /**
      * Convert the given int value to string
      *
      * @param value  The value to convert to string
@@ -41,6 +62,27 @@ library Strings {
      */
     function toString(int256 value) external pure returns (string memory) {
         return _toString(value);
+    }
+
+    /**
+     * Convert the given int value to string, where as many decimal digits are used as given
+     *
+     * @param value  The value to convert to string
+     * @param decimals  The number of decimal places to use
+     * @return  The resulting string
+     */
+    function toString(int256 value, uint8 decimals) external pure returns (string memory) {
+        uint256 decimalPart = uint256(value < 0 ? -value : value) % 10**decimals;
+        int256 integerPart = value / int256(10**decimals);
+        if (0 != decimalPart) {
+            return string.concat(
+                _toString(integerPart),
+                '.',
+                _toString(decimalPart)
+            );
+        } else {
+            return _toString(integerPart);
+        }
     }
 
     /**
