@@ -2,6 +2,7 @@
 pragma solidity ^0.8.17;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import {Gateway} from "./Gateway.sol";
 import {IERC20Gateway} from "./IERC20Gateway.sol";
@@ -9,6 +10,8 @@ import {IERC20Gateway} from "./IERC20Gateway.sol";
 import {Strings} from "./Strings.sol";
 
 abstract contract ERC20Gateway is Gateway, IERC20Gateway {
+    using SafeERC20 for IERC20;
+
     // address of the underlying ERC20 token
     address public immutable override token;
 
@@ -79,7 +82,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
         _beforeTransferFromWithVoucher(voucher);
 
         TransferFromVoucher memory decodedVoucher = abi.decode(voucher.payload, (TransferFromVoucher));
-        IERC20(token).transferFrom(decodedVoucher.from, decodedVoucher.to, decodedVoucher.amount);
+        IERC20(token).safeTransferFrom(decodedVoucher.from, decodedVoucher.to, decodedVoucher.amount);
 
         _afterTransferFromWithVoucher(voucher);
     }

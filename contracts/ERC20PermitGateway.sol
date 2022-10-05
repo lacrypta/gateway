@@ -3,6 +3,7 @@ pragma solidity ^0.8.17;
 
 import {IERC165} from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 import {IERC20Permit} from "@openzeppelin/contracts/token/ERC20/extensions/draft-IERC20Permit.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import {ERC20Gateway} from "./ERC20Gateway.sol";
 import {IERC20PermitGateway} from "./IERC20PermitGateway.sol";
@@ -10,6 +11,8 @@ import {IERC20PermitGateway} from "./IERC20PermitGateway.sol";
 import {Strings} from "./Strings.sol";
 
 abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
+    using SafeERC20 for IERC20Permit;
+
     // Tag associated to the PermitVoucher
     //
     // This is computed using the "encodeType" convention laid out in <https://eips.ethereum.org/EIPS/eip-712#definition-of-encodetype>.
@@ -80,7 +83,7 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
         _beforePermitWithVoucher(voucher);
 
         PermitVoucher memory decodedVoucher = abi.decode(voucher.payload, (PermitVoucher));
-        IERC20Permit(token).permit(
+        IERC20Permit(token).safePermit(
             decodedVoucher.owner,
             decodedVoucher.spender,
             decodedVoucher.value,
