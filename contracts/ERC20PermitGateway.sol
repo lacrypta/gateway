@@ -2,6 +2,7 @@
 pragma solidity ^0.8.17;
 
 import {IERC20Permit} from "@openzeppelin/contracts/token/ERC20/extensions/draft-IERC20Permit.sol";
+import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import {ERC20Gateway} from "./ERC20Gateway.sol";
@@ -48,13 +49,13 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
      * @param voucher  Voucher to generate the user-readable message of
      * @return message  The voucher's generated user-readable message
      */
-    function _generatePermitVoucherMessage(Voucher memory voucher) private pure returns (string memory message) {
+    function _generatePermitVoucherMessage(Voucher memory voucher) private view returns (string memory message) {
         PermitVoucher memory decodedVoucher = abi.decode(voucher.payload, (PermitVoucher));
         message = string.concat(
             "Permit", "\n",
             "owner: ", Strings.toString(decodedVoucher.owner), "\n",
             "spender: ", Strings.toString(decodedVoucher.spender), "\n",
-            "value: ", Strings.toString(decodedVoucher.value), "\n",
+            "value: ", IERC20Metadata(token).symbol(), ' ', Strings.toString(decodedVoucher.value, IERC20Metadata(token).decimals()), "\n",
             "deadline: ", Strings.toIso8601(Strings.Epoch.wrap(uint40(decodedVoucher.deadline))), "\n",
             "v: ", Strings.toString(decodedVoucher.v), "\n",
             "r: ", Strings.toString(decodedVoucher.r), "\n",

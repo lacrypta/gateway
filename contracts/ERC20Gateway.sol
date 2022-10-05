@@ -2,6 +2,7 @@
 pragma solidity ^0.8.17;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 import {Gateway} from "./Gateway.sol";
@@ -52,13 +53,13 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
      * @param voucher  Voucher to generate the user-readable message of
      * @return message  The voucher's generated user-readable message
      */
-    function _generateTransferFromVoucherMessage(Voucher memory voucher) private pure returns (string memory message) {
+    function _generateTransferFromVoucherMessage(Voucher memory voucher) private view returns (string memory message) {
         TransferFromVoucher memory decodedVoucher = abi.decode(voucher.payload, (TransferFromVoucher));
         message = string.concat(
             "TransferFrom", "\n",
             "from: ", Strings.toString(decodedVoucher.from), "\n",
             "to: ", Strings.toString(decodedVoucher.to), "\n",
-            "amount: ", Strings.toString(decodedVoucher.amount)
+            "amount: ", IERC20Metadata(token).symbol(), ' ', Strings.toString(decodedVoucher.amount, IERC20Metadata(token).decimals())
         );
     }
 
