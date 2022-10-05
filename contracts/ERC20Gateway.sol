@@ -42,7 +42,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
      * @param interfaceId  Interface ID to check against
      * @return  Whether the provided interface ID is supported
      */
-    function supportsInterface(bytes4 interfaceId) public view virtual override(Gateway) returns (bool) {
+    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
         return interfaceId == type(IERC20Gateway).interfaceId || super.supportsInterface(interfaceId);
     }
 
