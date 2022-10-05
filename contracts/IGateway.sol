@@ -53,6 +53,14 @@ interface IGateway {
     function hashVoucher(Voucher memory voucher) external view returns (bytes32 voucherHash);
 
     /**
+     * Return the string representation to be signed for a given Voucher
+     *
+     * @param voucher  The voucher to stringify
+     * @return voucherString  The string representation to be signed of the given voucher
+     */
+    function stringifyVoucher(Voucher memory voucher) external view returns (string memory voucherString);
+
+    /**
      * Validate the given voucher against the given signature, by the given signer
      *
      * @param voucher  The voucher to validate

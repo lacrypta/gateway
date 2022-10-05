@@ -2,16 +2,15 @@
 pragma solidity ^0.8.17;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {EIP712} from "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 
 import {Gateway} from "./Gateway.sol";
 import {IERC20Gateway} from "./IERC20Gateway.sol";
 
+import {Strings} from "./Strings.sol";
+
 abstract contract ERC20Gateway is Gateway, IERC20Gateway {
     // address of the underlying ERC20 token
     address public immutable override token;
-    // generated name of gateway proper
-    string public override name;
 
     // Tag associated to the TransferFromVoucher
     //
@@ -21,15 +20,17 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
         uint32(bytes4(keccak256("TransferFromVoucher(address from,address to,uint256 amount)")));
 
     /**
-     * Build a new ERC20Gateway from the given token address and gateway name
+     * Build a new ERC20Gateway from the given token address
      *
      * @param _token  Underlying ERC20 token
-     * @param _name  The name to give the newly created gateway
      */
-    constructor(address _token, string memory _name) EIP712(_name, "1") {
+    constructor(address _token) {
         token = _token;
-        name = _name;
-        _addHandler(TRANSFER_FROM_VOUCHER_TAG, HandlerEntry({signer: _extractTransferFromVoucherSigner, execute: _executeTransferFromVoucher}));
+        _addHandler(TRANSFER_FROM_VOUCHER_TAG, HandlerEntry({
+            message: _generateTransferFromVoucherMessage,
+            signer: _extractTransferFromVoucherSigner,
+            execute: _executeTransferFromVoucher
+        }));
     }
 
     /**
@@ -40,6 +41,22 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
      */
     function supportsInterface(bytes4 interfaceId) public view virtual override(Gateway) returns (bool) {
         return interfaceId == type(IERC20Gateway).interfaceId || super.supportsInterface(interfaceId);
+    }
+
+    /**
+     * Generate the user-readable message from the given voucher
+     *
+     * @param voucher  Voucher to generate the user-readable message of
+     * @return message  The voucher's generated user-readable message
+     */
+    function _generateTransferFromVoucherMessage(Voucher memory voucher) private pure returns (string memory message) {
+        TransferFromVoucher memory decodedVoucher = abi.decode(voucher.payload, (TransferFromVoucher));
+        message = string.concat(
+            "TransferFrom", "\n",
+            "from: ", Strings.toString(decodedVoucher.from), "\n",
+            "to: ", Strings.toString(decodedVoucher.to), "\n",
+            "amount: ", Strings.toString(decodedVoucher.amount)
+        );
     }
 
     /**

@@ -7,6 +7,8 @@ import {IERC20Permit} from "@openzeppelin/contracts/token/ERC20/extensions/draft
 import {ERC20Gateway} from "./ERC20Gateway.sol";
 import {IERC20PermitGateway} from "./IERC20PermitGateway.sol";
 
+import {Strings} from "./Strings.sol";
+
 abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
     // Tag associated to the PermitVoucher
     //
@@ -16,13 +18,16 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
         uint32(bytes4(keccak256("PermitVoucher(address owner,address spender,uint256 value,uint256 deadline,uint8 v,bytes32 r,bytes32 s)")));
 
     /**
-     * Build a new ERC20PermitGateway from the given token address and gateway name
+     * Build a new ERC20PermitGateway from the given token address
      *
      * @param _token  Underlying ERC20 token
-     * @param _name  The name to give the newly created gateway
      */
-    constructor(address _token, string memory _name) ERC20Gateway(_token, _name) {
-        _addHandler(PERMIT_VOUCHER_TAG, HandlerEntry({signer: _extractPermitVoucherSigner, execute: _executePermitVoucher}));
+    constructor(address _token) ERC20Gateway(_token) {
+        _addHandler(PERMIT_VOUCHER_TAG, HandlerEntry({
+            message: _generatePermitVoucherMessage,
+            signer: _extractPermitVoucherSigner,
+            execute: _executePermitVoucher
+        }));
     }
 
     /**
@@ -33,6 +38,26 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
      */
     function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
         return interfaceId == type(IERC20PermitGateway).interfaceId || super.supportsInterface(interfaceId);
+    }
+
+    /**
+     * Generate the user-readable message from the given voucher
+     *
+     * @param voucher  Voucher to generate the user-readable message of
+     * @return message  The voucher's generated user-readable message
+     */
+    function _generatePermitVoucherMessage(Voucher memory voucher) private pure returns (string memory message) {
+        PermitVoucher memory decodedVoucher = abi.decode(voucher.payload, (PermitVoucher));
+        message = string.concat(
+            "Permit", "\n",
+            "owner: ", Strings.toString(decodedVoucher.owner), "\n",
+            "spender: ", Strings.toString(decodedVoucher.spender), "\n",
+            "value: ", Strings.toString(decodedVoucher.value), "\n",
+            "deadline: ", Strings.toIso8601(Strings.Epoch.wrap(decodedVoucher.deadline)), "\n",
+            "v: ", Strings.toString(decodedVoucher.v), "\n",
+            "r: ", Strings.toString(decodedVoucher.r), "\n",
+            "s: ", Strings.toString(decodedVoucher.s)
+        );
     }
 
     /**

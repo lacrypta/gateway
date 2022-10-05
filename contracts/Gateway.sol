@@ -2,20 +2,25 @@
 pragma solidity ^0.8.17;
 
 import {Context} from "@openzeppelin/contracts/utils/Context.sol";
-import {EIP712} from "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import {SignatureChecker} from "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
+import {Multicall} from "@openzeppelin/contracts/utils/Multicall.sol";
+
+import {Strings} from "./Strings.sol";
+
 import "./IGateway.sol";
 
-abstract contract Gateway is Context, EIP712, ERC165, IGateway {
+abstract contract Gateway is Context, ERC165, IGateway, Multicall {
     /**
      * Structure used to keep track of handling functions
      *
+     * @custom:member message  The user-readable message-generating function
      * @custom:member signer  The signer-extractor function
      * @custom:member execute  The execution function
      */
     struct HandlerEntry {
+        function(Voucher memory) view returns (string memory) message;
         function(Voucher memory) view returns (address) signer;
         function(Voucher memory) execute;
     }
@@ -50,6 +55,16 @@ abstract contract Gateway is Context, EIP712, ERC165, IGateway {
      */
     function hashVoucher(Voucher memory voucher) external view override returns (bytes32 voucherHash) {
         voucherHash = _hashVoucher(voucher);
+    }
+
+    /**
+     * Return the string representation to be signed for a given Voucher
+     *
+     * @param voucher  The voucher to stringify
+     * @return voucherString  The string representation to be signed of the given voucher
+     */
+    function stringifyVoucher(Voucher memory voucher) external view override returns (string memory voucherString) {
+        voucherString = _stringifyVoucher(voucher);
     }
 
     /**
@@ -99,23 +114,50 @@ abstract contract Gateway is Context, EIP712, ERC165, IGateway {
     // --- Protected utilities --------------------------------------------------------------------------------------------------------------------------------
 
     /**
+     * Return the user-readable message for the given voucher
+     *
+     * @param voucher  Voucher to obtain the user-readable message for
+     * @return message  The voucher's user-readable message
+     */
+    function _message(Voucher memory voucher) internal view returns (string memory message) {
+        message = voucherHandler[voucher.tag].message(voucher);
+    }
+
+    /**
      * Retrieve the signer of the given Voucher
      *
      * @param voucher  Voucher to retrieve the signer of
      * @return signer  The voucher's signer
      */
-    function _getSigner(Voucher memory voucher) internal view returns (address signer) {
+    function _signer(Voucher memory voucher) internal view returns (address signer) {
         signer = voucherHandler[voucher.tag].signer(voucher);
     }
 
     /**
-     * Retrieve the serving function for the given Voucher
+     * Execute the given Voucher
      *
-     * @param voucher  Voucher to retrieve the serving function of
-     * @return execute  The voucher's serving function
+     * @param voucher  Voucher to execute
      */
-    function _getExecute(Voucher memory voucher) internal view returns (function(Voucher memory) execute) {
-        execute = voucherHandler[voucher.tag].execute;
+    function _execute(Voucher memory voucher) internal {
+        voucherHandler[voucher.tag].execute(voucher);
+    }
+
+    /**
+     * Actually return the string representation to be signed for a given Voucher
+     *
+     * @param voucher  The voucher to stringify
+     * @return voucherString  The string representation to be signed of the given voucher
+     */
+    function _stringifyVoucher(Voucher memory voucher) internal view returns (string memory voucherString) {
+        voucherString = string.concat(
+            _message(voucher), "\n",
+            "---", "\n",
+            "tag: ", Strings.toString(voucher.tag), "\n",
+            "nonce: ", Strings.toString(voucher.nonce), "\n",
+            "deadline: ", Strings.toIso8601(Strings.Epoch.wrap(voucher.deadline)), "\n",
+            "payload: ", Strings.toString(voucher.payload), "\n",
+            "metadata: ", Strings.toString(voucher.metadata)
+        );
     }
 
     /**
@@ -125,14 +167,7 @@ abstract contract Gateway is Context, EIP712, ERC165, IGateway {
      * @return voucherHash  The voucher hash associated to the given voucher
      */
     function _hashVoucher(Voucher memory voucher) internal view returns (bytes32 voucherHash) {
-        voucherHash = _hashTypedDataV4(keccak256(abi.encode(
-            VOUCHER_TYPEHASH,
-            voucher.tag,
-            voucher.nonce,
-            voucher.deadline,
-            keccak256(voucher.payload),
-            keccak256(voucher.metadata)
-        )));
+        voucherHash = keccak256(bytes(_stringifyVoucher(voucher)));
     }
 
     /**
@@ -142,8 +177,7 @@ abstract contract Gateway is Context, EIP712, ERC165, IGateway {
      * @param signature  The associated voucher signature
      */
     function _validateVoucher(Voucher memory voucher, bytes memory signature) internal view {
-        bytes32 voucherHash = _hashVoucher(voucher);
-        require(SignatureChecker.isValidSignatureNow(_getSigner(voucher), voucherHash, signature), "Gateway: invalid voucher signature");
+        require(SignatureChecker.isValidSignatureNow(_signer(voucher), _hashVoucher(voucher), signature), "Gateway: invalid voucher signature");
         require(block.timestamp <= voucher.deadline, "Gateway: expired deadline");
     }
 
@@ -161,7 +195,7 @@ abstract contract Gateway is Context, EIP712, ERC165, IGateway {
         require(voucherServed[voucherHash] == false, "Gateway: voucher already served");
         voucherServed[voucherHash] = true;
 
-        _getExecute(voucher)(voucher);
+        _execute(voucher);
 
         emit VoucherServed(voucherHash, _msgSender());
     }

@@ -12,13 +12,6 @@ interface IERC20Gateway is IGateway {
     function token() external view returns (address);
 
     /**
-     * Retrieve the generated name of gateway proper
-     *
-     * @return  The generated name of gateway proper
-     */
-    function name() external view returns (string memory);
-
-    /**
      * transferFrom() voucher
      *
      * @custom:member from  The address from which to transfer funds
