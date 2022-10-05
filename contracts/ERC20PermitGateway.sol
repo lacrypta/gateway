@@ -56,7 +56,7 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
             "owner: ", Strings.toString(decodedVoucher.owner), "\n",
             "spender: ", Strings.toString(decodedVoucher.spender), "\n",
             "value: ", Strings.toString(decodedVoucher.value), "\n",
-            "deadline: ", Strings.toIso8601(Strings.Epoch.wrap(decodedVoucher.deadline)), "\n",
+            "deadline: ", Strings.toIso8601(Strings.Epoch.wrap(uint40(decodedVoucher.deadline))), "\n",
             "v: ", Strings.toString(decodedVoucher.v), "\n",
             "r: ", Strings.toString(decodedVoucher.r), "\n",
             "s: ", Strings.toString(decodedVoucher.s)

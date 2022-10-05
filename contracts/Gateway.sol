@@ -154,7 +154,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall {
             "---", "\n",
             "tag: ", Strings.toString(voucher.tag), "\n",
             "nonce: ", Strings.toString(voucher.nonce), "\n",
-            "deadline: ", Strings.toIso8601(Strings.Epoch.wrap(voucher.deadline)), "\n",
+            "deadline: ", Strings.toIso8601(Strings.Epoch.wrap(uint40(voucher.deadline))), "\n",
             "payload: ", Strings.toString(voucher.payload), "\n",
             "metadata: ", Strings.toString(voucher.metadata)
         );

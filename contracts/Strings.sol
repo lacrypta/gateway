@@ -8,7 +8,7 @@ pragma solidity ^0.8.17;
 library Strings {
 
     // Type used for UNIX epoch quantities
-    type Epoch is uint256;
+    type Epoch is uint40;
 
     // Type used to represent "quarters-of-an-hour" (used for timezone offset specification)
     type Quarters is int8;
@@ -60,9 +60,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes1 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -72,9 +74,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes2 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -84,9 +88,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes3 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -96,9 +102,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes4 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -108,9 +116,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes5 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -120,9 +130,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes6 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -132,9 +144,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes7 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -144,9 +158,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes8 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -156,9 +172,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes9 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -168,9 +186,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes10 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -180,9 +200,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes11 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -192,9 +214,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes12 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -204,9 +228,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes13 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -216,9 +242,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes14 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -228,9 +256,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes15 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -240,9 +270,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes16 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -252,9 +284,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes17 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -264,9 +298,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes18 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -276,9 +312,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes19 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -288,9 +326,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes20 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -300,9 +340,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes21 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -312,9 +354,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes22 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -324,9 +368,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes23 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -336,9 +382,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes24 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -348,9 +396,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes25 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -360,9 +410,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes26 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -372,9 +424,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes27 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -384,9 +438,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes28 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -396,9 +452,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes29 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -408,9 +466,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes30 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -420,9 +480,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes31 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -432,9 +494,11 @@ library Strings {
      * @return  The resulting string
      */
     function toString(bytes32 value) external pure returns (string memory) {
-        bytes memory temp = new bytes(value.length);
-        for (uint8 i = 0; i < value.length; i ++) temp[i] = value[i];
-        return _toString(temp);
+        unchecked {
+            bytes memory temp = new bytes(value.length);
+            for (uint8 i = 0; i < value.length; i++) temp[i] = value[i];
+            return _toString(temp);
+        }
     }
 
     /**
@@ -516,19 +580,21 @@ library Strings {
      * @return  The resulting string
      */
     function _toString(uint256 value) internal pure returns (string memory) {
-        if (value == 0) {
-            return "0";
+        unchecked {
+            if (value == 0) {
+                return "0";
+            }
+            uint256 digits;
+            for (uint256 temp = value; temp != 0; temp /= 10) {
+                digits++;
+            }
+            bytes memory buffer = new bytes(digits);
+            for (; 0 < digits; digits--) {
+                buffer[digits - 1] = DEC_DIGITS[value % 10];
+                value /= 10;
+            }
+            return string(buffer);
         }
-        uint256 digits;
-        for (uint256 temp = value; temp != 0; temp /= 10) {
-            digits++;
-        }
-        bytes memory buffer = new bytes(digits);
-        for (; 0 < digits; digits--) {
-            buffer[digits - 1] = DEC_DIGITS[value % 10];
-            value /= 10;
-        }
-        return string(buffer);
     }
 
     /**
@@ -551,15 +617,17 @@ library Strings {
      * @return  The resulting string
      */
     function _toString(bytes memory value) internal pure returns (string memory) {
-        uint256 len = value.length;
-        bytes memory buffer = new bytes(len * 2 + 2);
-        buffer[0] = '[';
-        for ((uint256 i, uint256 j, uint256 k) = (0, 1, 2); i < len; (i, j, k) = (i + 1, j + 2, k + 2)) {
-            uint8 val = uint8(value[i]);
-            (buffer[j], buffer[k]) = (HEX_DIGITS[val >> 4], HEX_DIGITS[val & 0x0f]);
+        unchecked {
+            uint256 len = value.length;
+            bytes memory buffer = new bytes(len * 2 + 2);
+            buffer[0] = '[';
+            for ((uint256 i, uint256 j, uint256 k) = (0, 1, 2); i < len; (i, j, k) = (i + 1, j + 2, k + 2)) {
+                uint8 val = uint8(value[i]);
+                (buffer[j], buffer[k]) = (HEX_DIGITS[val >> 4], HEX_DIGITS[val & 0x0f]);
+            }
+            buffer[len * 2 + 1] = ']';
+            return string(buffer);
         }
-        buffer[len * 2 + 1] = ']';
-        return string(buffer);
     }
 
     /**
@@ -569,15 +637,17 @@ library Strings {
      * @return  The resulting string
      */
     function _toString(address value) internal pure returns (string memory) {
-        bytes20 nValue = bytes20(value);
-        bytes memory buffer = new bytes(42);
-        buffer[0] = '<';
-        for ((uint256 i, uint256 j, uint256 k) = (0, 1, 2); i < 20; (i, j, k) = (i + 1, j + 2, k + 2)) {
-            uint8 val = uint8(nValue[i]);
-            (buffer[j], buffer[k]) = (HEX_DIGITS[val >> 4], HEX_DIGITS[val & 0x0f]);
+        unchecked {
+            bytes20 nValue = bytes20(value);
+            bytes memory buffer = new bytes(42);
+            buffer[0] = '<';
+            for ((uint256 i, uint256 j, uint256 k) = (0, 1, 2); i < 20; (i, j, k) = (i + 1, j + 2, k + 2)) {
+                uint8 val = uint8(nValue[i]);
+                (buffer[j], buffer[k]) = (HEX_DIGITS[val >> 4], HEX_DIGITS[val & 0x0f]);
+            }
+            buffer[41] = '>';
+            return string(buffer);
         }
-        buffer[41] = '>';
-        return string(buffer);
     }
 
     /**
@@ -597,36 +667,46 @@ library Strings {
      * @return tzHours  The timezone offset hours
      * @return tzMinutes  The timezone offset minutes (always multiple of 15)
      */
-    function _toDateTimeParts(Epoch value, Quarters tzOffset) internal pure returns (uint256 year, uint256 month, uint256 day, uint256 hour, uint256 minute, uint256 second, int256 tzHours, uint256 tzMinutes) {
-        require (-48 <= Quarters.unwrap(tzOffset), "Strings: timezone offset too small");
-        require (Quarters.unwrap(tzOffset) <= 56, "Strings: timezone offset too big");
+    function _toDateTimeParts(Epoch value, Quarters tzOffset) internal pure returns (uint256 year, uint256 month, uint256 day, uint256 hour, uint256 minute, uint256 second, int8 tzHours, uint8 tzMinutes) {
+        unchecked {
+            require(-48 <= Quarters.unwrap(tzOffset), "Strings: timezone offset too small");
+            require(Quarters.unwrap(tzOffset) <= 56, "Strings: timezone offset too big");
 
-        int256 tzOffsetInSeconds = int256(Quarters.unwrap(tzOffset)) * 900;
-        uint256 nValue = tzOffsetInSeconds < 0 ? Epoch.unwrap(value) - uint256(-tzOffsetInSeconds) : Epoch.unwrap(value) + uint256(tzOffsetInSeconds);
+            int256 tzOffsetInSeconds = int256(Quarters.unwrap(tzOffset)) * 900;
+            uint256 nValue;
+            if (tzOffsetInSeconds < 0) {
+                require(uint256(-tzOffsetInSeconds) <= Epoch.unwrap(value), "Strings: epoch time too small for timezone offset");
+                nValue = Epoch.unwrap(value) - uint256(-tzOffsetInSeconds);
+            } else {
+                nValue = Epoch.unwrap(value) + uint256(tzOffsetInSeconds);
+            }
 
-        {
-            uint256 z = nValue / 86400 + 719468;
-            uint256 era = z / 146097;
-            uint256 doe = z - era * 146097;
-            uint256 yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
-            uint256 doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
-            uint256 mp = (5 * doy + 2) / 153;
-            //
-            year = yoe + era * 400 + (mp == 10 || mp == 11 ? 1 : 0);
-            month = mp < 10 ? mp + 3 : mp - 9;
-            day = doy - (153 * mp + 2) / 5 + 1;
+            require(nValue <= 253402311599, "Strings: epoch time too big");
+
+            {
+                uint256 z = nValue / 86400 + 719468;
+                uint256 era = z / 146097;
+                uint256 doe = z - era * 146097;
+                uint256 yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
+                uint256 doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+                uint256 mp = (5 * doy + 2) / 153;
+                //
+                year = yoe + era * 400 + (mp == 10 || mp == 11 ? 1 : 0);
+                month = mp < 10 ? mp + 3 : mp - 9;
+                day = doy - (153 * mp + 2) / 5 + 1;
+            }
+
+            {
+                uint256 w = nValue % 86400;
+                //
+                hour = w / 3600;
+                minute = (w % 3600) / 60;
+                second = w % 60;
+            }
+
+            tzHours = int8(tzOffsetInSeconds / 3600);
+            tzMinutes = uint8((uint256(tzOffsetInSeconds < 0 ? -tzOffsetInSeconds : tzOffsetInSeconds) % 3600) / 60);
         }
-
-        {
-            uint256 w = nValue % 86400;
-            //
-            hour = w / 3600;
-            minute = (w % 3600) / 60;
-            second = w % 60;
-        }
-
-        tzHours = tzOffsetInSeconds / 3600;
-        tzMinutes = (uint256(tzOffsetInSeconds < 0 ? -tzOffsetInSeconds : tzOffsetInSeconds) % 3600) / 60;
     }
 
     /**
@@ -637,50 +717,52 @@ library Strings {
      * @return  The resulting string
      */
     function _toIso8601(Epoch value, Quarters tzOffset) internal pure returns (string memory) {
-        (uint256 year, uint256 month, uint256 day, uint256 hour, uint256 minute, uint256 second, int256 tzHours, uint256 tzMinutes) = _toDateTimeParts(value, tzOffset);
+        unchecked {
+            (uint256 year, uint256 month, uint256 day, uint256 hour, uint256 minute, uint256 second, int8 tzHours, uint8 tzMinutes) = _toDateTimeParts(value, tzOffset);
 
-        bytes memory buffer = "0000-00-00T00:00:00";
+            bytes memory buffer = "0000-00-00T00:00:00";
 
-        buffer[0] = DEC_DIGITS[(year / 1000) % 10];
-        buffer[1] = DEC_DIGITS[(year / 100) % 10];
-        buffer[2] = DEC_DIGITS[(year / 10) % 10];
-        buffer[3] = DEC_DIGITS[year % 10];
-        //
-        buffer[5] = DEC_DIGITS[(month / 10) % 10];
-        buffer[6] = DEC_DIGITS[month % 10];
-        //
-        buffer[8] = DEC_DIGITS[(day / 10) % 10];
-        buffer[9] = DEC_DIGITS[day % 10];
-        //
-        buffer[11] = DEC_DIGITS[(hour / 10) % 10];
-        buffer[12] = DEC_DIGITS[hour % 10];
-        //
-        buffer[14] = DEC_DIGITS[(minute / 10) % 10];
-        buffer[15] = DEC_DIGITS[minute % 10];
-        //
-        buffer[17] = DEC_DIGITS[(second / 10) % 10];
-        buffer[18] = DEC_DIGITS[second % 10];
-
-        if (Quarters.unwrap(tzOffset) == 0) {
-            return string.concat(string(buffer), "Z");
-        } else {
-            bytes memory tzBuffer = " 00:00";
-            uint256 tzh;
-            if (Quarters.unwrap(tzOffset) < 0) {
-                tzBuffer[0] = "-";
-                tzh = uint256(-tzHours);
-            } else {
-                tzBuffer[0] = "+";
-                tzh = uint256(tzHours);
-            }
-
-            tzBuffer[1] = DEC_DIGITS[(tzh / 10) % 10];
-            tzBuffer[2] = DEC_DIGITS[tzh % 10];
+            buffer[0] = DEC_DIGITS[(year / 1000) % 10];
+            buffer[1] = DEC_DIGITS[(year / 100) % 10];
+            buffer[2] = DEC_DIGITS[(year / 10) % 10];
+            buffer[3] = DEC_DIGITS[year % 10];
             //
-            tzBuffer[4] = DEC_DIGITS[(tzMinutes / 10) % 10];
-            tzBuffer[5] = DEC_DIGITS[tzMinutes % 10];
+            buffer[5] = DEC_DIGITS[(month / 10) % 10];
+            buffer[6] = DEC_DIGITS[month % 10];
+            //
+            buffer[8] = DEC_DIGITS[(day / 10) % 10];
+            buffer[9] = DEC_DIGITS[day % 10];
+            //
+            buffer[11] = DEC_DIGITS[(hour / 10) % 10];
+            buffer[12] = DEC_DIGITS[hour % 10];
+            //
+            buffer[14] = DEC_DIGITS[(minute / 10) % 10];
+            buffer[15] = DEC_DIGITS[minute % 10];
+            //
+            buffer[17] = DEC_DIGITS[(second / 10) % 10];
+            buffer[18] = DEC_DIGITS[second % 10];
 
-            return string.concat(string(buffer), string(tzBuffer));
+            if (Quarters.unwrap(tzOffset) == 0) {
+                return string.concat(string(buffer), "Z");
+            } else {
+                bytes memory tzBuffer = " 00:00";
+                uint8 tzh;
+                if (Quarters.unwrap(tzOffset) < 0) {
+                    tzBuffer[0] = "-";
+                    tzh = uint8(-tzHours);
+                } else {
+                    tzBuffer[0] = "+";
+                    tzh = uint8(tzHours);
+                }
+
+                tzBuffer[1] = DEC_DIGITS[(tzh / 10) % 10];
+                tzBuffer[2] = DEC_DIGITS[tzh % 10];
+                //
+                tzBuffer[4] = DEC_DIGITS[(tzMinutes / 10) % 10];
+                tzBuffer[5] = DEC_DIGITS[tzMinutes % 10];
+
+                return string.concat(string(buffer), string(tzBuffer));
+            }
         }
     }
 }
