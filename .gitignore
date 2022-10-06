@@ -12,3 +12,6 @@ typechain-types
 abi
 artifacts
 cache
+
+# Yarn error log
+yarn-error.log
