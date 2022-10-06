@@ -53,7 +53,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
      * @param voucher  Voucher to generate the user-readable message of
      * @return message  The voucher's generated user-readable message
      */
-    function _generateTransferFromVoucherMessage(Voucher memory voucher) private view returns (string memory message) {
+    function _generateTransferFromVoucherMessage(Voucher memory voucher) internal view returns (string memory message) {
         TransferFromVoucher memory decodedVoucher = abi.decode(voucher.payload, (TransferFromVoucher));
         message = string.concat(
             "TransferFrom", "\n",
@@ -69,7 +69,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
      * @param voucher  Voucher to extract the signer of
      * @return signer  The voucher's signer
      */
-    function _extractTransferFromVoucherSigner(Voucher memory voucher) private pure returns (address signer) {
+    function _extractTransferFromVoucherSigner(Voucher memory voucher) internal pure returns (address signer) {
         TransferFromVoucher memory decodedVoucher = abi.decode(voucher.payload, (TransferFromVoucher));
         signer = decodedVoucher.from;
     }
@@ -79,7 +79,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
      *
      * @param voucher  The voucher to execute
      */
-    function _executeTransferFromVoucher(Voucher memory voucher) private {
+    function _executeTransferFromVoucher(Voucher memory voucher) internal {
         _beforeTransferFromWithVoucher(voucher);
 
         TransferFromVoucher memory decodedVoucher = abi.decode(voucher.payload, (TransferFromVoucher));

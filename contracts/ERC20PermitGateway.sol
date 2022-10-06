@@ -49,7 +49,7 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
      * @param voucher  Voucher to generate the user-readable message of
      * @return message  The voucher's generated user-readable message
      */
-    function _generatePermitVoucherMessage(Voucher memory voucher) private view returns (string memory message) {
+    function _generatePermitVoucherMessage(Voucher memory voucher) internal view returns (string memory message) {
         PermitVoucher memory decodedVoucher = abi.decode(voucher.payload, (PermitVoucher));
         message = string.concat(
             "Permit", "\n",
@@ -69,7 +69,7 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
      * @param voucher  Voucher to extract the signer of
      * @return signer  The voucher's signer
      */
-    function _extractPermitVoucherSigner(Voucher memory voucher) private pure returns (address signer) {
+    function _extractPermitVoucherSigner(Voucher memory voucher) internal pure returns (address signer) {
         PermitVoucher memory decodedVoucher = abi.decode(voucher.payload, (PermitVoucher));
         signer = decodedVoucher.owner;
     }
@@ -79,7 +79,7 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
      *
      * @param voucher  The voucher to execute
      */
-    function _executePermitVoucher(Voucher memory voucher) private {
+    function _executePermitVoucher(Voucher memory voucher) internal {
         _beforePermitWithVoucher(voucher);
 
         PermitVoucher memory decodedVoucher = abi.decode(voucher.payload, (PermitVoucher));
