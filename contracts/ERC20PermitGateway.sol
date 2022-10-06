@@ -8,7 +8,7 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {ERC20Gateway} from "./ERC20Gateway.sol";
 import {IERC20PermitGateway} from "./IERC20PermitGateway.sol";
 
-import {Strings} from "./Strings.sol";
+import "./Strings.sol";
 
 abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
     using SafeERC20 for IERC20Permit;
@@ -53,13 +53,13 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
         PermitVoucher memory decodedVoucher = abi.decode(voucher.payload, (PermitVoucher));
         message = string.concat(
             "Permit", "\n",
-            "owner: ", Strings.toString(decodedVoucher.owner), "\n",
-            "spender: ", Strings.toString(decodedVoucher.spender), "\n",
-            "value: ", IERC20Metadata(token).symbol(), ' ', Strings.toString(decodedVoucher.value, IERC20Metadata(token).decimals()), "\n",
-            "deadline: ", Strings.toIso8601(Strings.Epoch.wrap(uint40(decodedVoucher.deadline))), "\n",
-            "v: ", Strings.toString(decodedVoucher.v), "\n",
-            "r: ", Strings.toString(decodedVoucher.r), "\n",
-            "s: ", Strings.toString(decodedVoucher.s)
+            "owner: ", toString(decodedVoucher.owner), "\n",
+            "spender: ", toString(decodedVoucher.spender), "\n",
+            "value: ", IERC20Metadata(token).symbol(), ' ', toString(decodedVoucher.value, IERC20Metadata(token).decimals()), "\n",
+            "deadline: ", toIso8601(Epoch.wrap(uint40(decodedVoucher.deadline))), "\n",
+            "v: ", toString(decodedVoucher.v), "\n",
+            "r: ", toString(decodedVoucher.r), "\n",
+            "s: ", toString(decodedVoucher.s)
         );
     }
 

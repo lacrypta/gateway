@@ -7,7 +7,7 @@ import {SignatureChecker} from "@openzeppelin/contracts/utils/cryptography/Signa
 
 import {Multicall} from "@openzeppelin/contracts/utils/Multicall.sol";
 
-import {Strings} from "./Strings.sol";
+import "./Strings.sol";
 
 import "./IGateway.sol";
 
@@ -152,11 +152,11 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall {
         voucherString = string.concat(
             _message(voucher), "\n",
             "---", "\n",
-            "tag: ", Strings.toString(voucher.tag), "\n",
-            "nonce: ", Strings.toString(voucher.nonce), "\n",
-            "deadline: ", Strings.toIso8601(Strings.Epoch.wrap(uint40(voucher.deadline))), "\n",
-            "payload: ", Strings.toString(voucher.payload), "\n",
-            "metadata: ", Strings.toString(voucher.metadata)
+            "tag: ", toString(voucher.tag), "\n",
+            "nonce: ", toString(voucher.nonce), "\n",
+            "deadline: ", toIso8601(Epoch.wrap(uint40(voucher.deadline))), "\n",
+            "payload: ", toString(voucher.payload), "\n",
+            "metadata: ", toString(voucher.metadata)
         );
     }
 
