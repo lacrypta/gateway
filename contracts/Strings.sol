@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 pragma solidity ^0.8.17;
 
-// Type used for UNIX epoch quantities
-type Epoch is uint40;
-
-// Type used to represent "quarters-of-an-hour" (used for timezone offset specification)
-type Quarters is int8;
-
 /**
  * Convert the given boolean value to string (ie. "true" / "false")
  *
@@ -594,6 +588,12 @@ function toString(address value) pure returns (string memory) {
         return string(buffer);
     }
 }
+
+// Type used for UNIX epoch quantities
+type Epoch is uint40;
+
+// Type used to represent "quarters-of-an-hour" (used for timezone offset specification)
+type Quarters is int8;
 
 /**
  * Set of parts of a date/time value encoded by a given epoch
