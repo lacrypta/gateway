@@ -56,10 +56,10 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
     function _generateTransferFromVoucherMessage(Voucher memory voucher) internal view returns (string memory message) {
         TransferFromVoucher memory decodedVoucher = abi.decode(voucher.payload, (TransferFromVoucher));
         message = string.concat(
-            "TransferFrom", "\n",
-            "from: ", toString(decodedVoucher.from), "\n",
-            "to: ", toString(decodedVoucher.to), "\n",
-            "amount: ", IERC20Metadata(token).symbol(), ' ', toString(decodedVoucher.amount, IERC20Metadata(token).decimals())
+            "TransferFrom\n",
+            string.concat("from: ", toString(decodedVoucher.from), "\n"),
+            string.concat("to: ", toString(decodedVoucher.to), "\n"),
+            string.concat("amount: ", IERC20Metadata(token).symbol(), ' ', toString(decodedVoucher.amount, IERC20Metadata(token).decimals()))
         );
     }
 

@@ -52,14 +52,14 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
     function _generatePermitVoucherMessage(Voucher memory voucher) internal view returns (string memory message) {
         PermitVoucher memory decodedVoucher = abi.decode(voucher.payload, (PermitVoucher));
         message = string.concat(
-            "Permit", "\n",
-            "owner: ", toString(decodedVoucher.owner), "\n",
-            "spender: ", toString(decodedVoucher.spender), "\n",
-            "value: ", IERC20Metadata(token).symbol(), ' ', toString(decodedVoucher.value, IERC20Metadata(token).decimals()), "\n",
-            "deadline: ", toIso8601(Epoch.wrap(uint40(decodedVoucher.deadline))), "\n",
-            "v: ", toString(decodedVoucher.v), "\n",
-            "r: ", toString(decodedVoucher.r), "\n",
-            "s: ", toString(decodedVoucher.s)
+            "Permit\n",
+            string.concat("owner: ", toString(decodedVoucher.owner), "\n"),
+            string.concat("spender: ", toString(decodedVoucher.spender), "\n"),
+            string.concat("value: ", IERC20Metadata(token).symbol(), ' ', toString(decodedVoucher.value, IERC20Metadata(token).decimals()), "\n"),
+            string.concat("deadline: ", toIso8601(Epoch.wrap(uint40(decodedVoucher.deadline))), "\n"),
+            string.concat("v: ", toString(decodedVoucher.v), "\n"),
+            string.concat("r: ", toString(decodedVoucher.r), "\n"),
+            string.concat("s: ", toString(decodedVoucher.s))
         );
     }
 

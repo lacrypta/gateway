@@ -150,13 +150,13 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall {
      */
     function _stringifyVoucher(Voucher memory voucher) internal view returns (string memory voucherString) {
         voucherString = string.concat(
-            _message(voucher), "\n",
-            "---", "\n",
-            "tag: ", toString(voucher.tag), "\n",
-            "nonce: ", toString(voucher.nonce), "\n",
-            "deadline: ", toIso8601(Epoch.wrap(uint40(voucher.deadline))), "\n",
-            "payload: ", toString(voucher.payload), "\n",
-            "metadata: ", toString(voucher.metadata)
+            string.concat(_message(voucher), "\n"),
+            "---\n",
+            string.concat("tag: ", toString(voucher.tag), "\n"),
+            string.concat("nonce: ", toString(voucher.nonce), "\n"),
+            string.concat("deadline: ", toIso8601(Epoch.wrap(uint40(voucher.deadline))), "\n"),
+            string.concat("payload: ", toString(voucher.payload), "\n"),
+            string.concat("metadata: ", toString(voucher.metadata))
         );
     }
 
