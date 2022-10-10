@@ -88,7 +88,7 @@ function toString(int256 value) pure returns (string memory) {
 function toString(int256 value, uint8 decimals) pure returns (string memory) {
     unchecked {
         if (value < 0) {
-            return string.concat('-', toString(uint256(-value), decimals));
+            return string.concat('-', toString(value == type(int256).min ? 1 + type(uint256).max >> 1 : uint256(-value), decimals));
         } else {
             return toString(uint256(value), decimals);
         }
