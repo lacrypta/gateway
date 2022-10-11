@@ -30,4 +30,52 @@ interface IERC20Gateway is IGateway {
      * @return  The tag associated to the TransferFromVoucher voucher itself
      */
     function TRANSFER_FROM_VOUCHER_TAG() external view returns (uint32);
+
+    /**
+     * Build a TransferFromVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param deadline  Voucher deadline to use
+     * @param from  Transfer origin to use
+     * @param to  Transfer destination to use
+     * @param amount  Transfer amount to use
+     * @param metadata  Voucher metadata to use
+     * @return voucher  The generated voucher
+     */
+    function buildTransferFromVoucher(uint256 nonce, uint256 deadline, address from, address to, uint256 amount, bytes memory metadata) external view returns (Voucher memory voucher);
+
+    /**
+     * Build a TransferFromVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param from  Transfer origin to use
+     * @param to  Transfer destination to use
+     * @param amount  Transfer amount to use
+     * @param metadata  Voucher metadata to use
+     * @return voucher  The generated voucher
+     */
+    function buildTransferFromVoucher(uint256 nonce, address from, address to, uint256 amount, bytes memory metadata) external view returns (Voucher memory voucher);
+
+    /**
+     * Build a TransferFromVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param deadline  Voucher deadline to use
+     * @param from  Transfer origin to use
+     * @param to  Transfer destination to use
+     * @param amount  Transfer amount to use
+     * @return voucher  The generated voucher
+     */
+    function buildTransferFromVoucher(uint256 nonce, uint256 deadline, address from, address to, uint256 amount) external view returns (Voucher memory voucher);
+
+    /**
+     * Build a TransferFromVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param from  Transfer origin to use
+     * @param to  Transfer destination to use
+     * @param amount  Transfer amount to use
+     * @return voucher  The generated voucher
+     */
+    function buildTransferFromVoucher(uint256 nonce, address from, address to, uint256 amount) external view returns (Voucher memory voucher);
 }

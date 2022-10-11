@@ -44,6 +44,103 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
     }
 
     /**
+     * Build a PermitVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param deadline  Voucher deadline to use
+     * @param owner  Permit owner address to use
+     * @param spender  Permit spender address to use
+     * @param value  Permit amount to use
+     * @param permitDeadline  Permit deadline to use
+     * @param v  Permit's signature "v" component to use
+     * @param r  Permit's signature "r" component to use
+     * @param s  Permit's signature "s" component to use
+     * @param metadata  Voucher metadata to use
+     * @return voucher  The generated voucher
+     */
+    function buildPermitVoucher(uint256 nonce, uint256 deadline, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes memory metadata) external pure override returns (Voucher memory voucher) {
+        voucher = _buildPermitVoucher(nonce, deadline, owner, spender, value, permitDeadline, v, r, s, metadata);
+    }
+
+    /**
+     * Build a PermitVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param owner  Permit owner address to use
+     * @param spender  Permit spender address to use
+     * @param value  Permit amount to use
+     * @param permitDeadline  Permit deadline to use
+     * @param v  Permit's signature "v" component to use
+     * @param r  Permit's signature "r" component to use
+     * @param s  Permit's signature "s" component to use
+     * @param metadata  Voucher metadata to use
+     * @return voucher  The generated voucher
+     */
+    function buildPermitVoucher(uint256 nonce, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes memory metadata) external view override returns (Voucher memory voucher) {
+        voucher = _buildPermitVoucher(nonce, block.timestamp + 1 hours, owner, spender, value, permitDeadline, v, r, s, metadata);
+    }
+
+    /**
+     * Build a PermitVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param deadline  Voucher deadline to use
+     * @param owner  Permit owner address to use
+     * @param spender  Permit spender address to use
+     * @param value  Permit amount to use
+     * @param permitDeadline  Permit deadline to use
+     * @param v  Permit's signature "v" component to use
+     * @param r  Permit's signature "r" component to use
+     * @param s  Permit's signature "s" component to use
+     * @return voucher  The generated voucher
+     */
+    function buildPermitVoucher(uint256 nonce, uint256 deadline, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s) external pure override returns (Voucher memory voucher) {
+        voucher = _buildPermitVoucher(nonce, deadline, owner, spender, value, permitDeadline, v, r, s, bytes(""));
+    }
+
+    /**
+     * Build a PermitVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param owner  Permit owner address to use
+     * @param spender  Permit spender address to use
+     * @param value  Permit amount to use
+     * @param permitDeadline  Permit deadline to use
+     * @param v  Permit's signature "v" component to use
+     * @param r  Permit's signature "r" component to use
+     * @param s  Permit's signature "s" component to use
+     * @return voucher  The generated voucher
+     */
+    function buildPermitVoucher(uint256 nonce, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s) external view override returns (Voucher memory voucher) {
+        voucher = _buildPermitVoucher(nonce, block.timestamp + 1 hours, owner, spender, value, permitDeadline, v, r, s, bytes(""));
+    }
+
+    /**
+     * Build a PermitVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param deadline  Voucher deadline to use
+     * @param owner  Permit owner address to use
+     * @param spender  Permit spender address to use
+     * @param value  Permit amount to use
+     * @param permitDeadline  Permit deadline to use
+     * @param v  Permit's signature "v" component to use
+     * @param r  Permit's signature "r" component to use
+     * @param s  Permit's signature "s" component to use
+     * @param metadata  Voucher metadata to use
+     * @return voucher  The generated voucher
+     */
+    function _buildPermitVoucher(uint256 nonce, uint256 deadline, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes memory metadata) internal pure returns (Voucher memory voucher) {
+        voucher = Voucher(
+            TRANSFER_FROM_VOUCHER_TAG,
+            nonce,
+            deadline,
+            abi.encode(PermitVoucher(owner, spender, value, permitDeadline, v, r, s)),
+            metadata
+        );
+    }
+
+    /**
      * Generate the user-readable message from the given voucher
      *
      * @param voucher  Voucher to generate the user-readable message of

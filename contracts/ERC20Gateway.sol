@@ -48,6 +48,83 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
     }
 
     /**
+     * Build a TransferFromVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param deadline  Voucher deadline to use
+     * @param from  Transfer origin to use
+     * @param to  Transfer destination to use
+     * @param amount  Transfer amount to use
+     * @param metadata  Voucher metadata to use
+     * @return voucher  The generated voucher
+     */
+    function buildTransferFromVoucher(uint256 nonce, uint256 deadline, address from, address to, uint256 amount, bytes memory metadata) external pure override returns (Voucher memory voucher) {
+        voucher = _buildTransferFromVoucher(nonce, deadline, from, to, amount, metadata);
+    }
+
+    /**
+     * Build a TransferFromVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param from  Transfer origin to use
+     * @param to  Transfer destination to use
+     * @param amount  Transfer amount to use
+     * @param metadata  Voucher metadata to use
+     * @return voucher  The generated voucher
+     */
+    function buildTransferFromVoucher(uint256 nonce, address from, address to, uint256 amount, bytes memory metadata) external view override returns (Voucher memory voucher) {
+        voucher = _buildTransferFromVoucher(nonce, block.timestamp + 1 hours, from, to, amount, metadata);
+    }
+
+    /**
+     * Build a TransferFromVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param deadline  Voucher deadline to use
+     * @param from  Transfer origin to use
+     * @param to  Transfer destination to use
+     * @param amount  Transfer amount to use
+     * @return voucher  The generated voucher
+     */
+    function buildTransferFromVoucher(uint256 nonce, uint256 deadline, address from, address to, uint256 amount) external pure override returns (Voucher memory voucher) {
+        voucher = _buildTransferFromVoucher(nonce, deadline, from, to, amount, bytes(""));
+    }
+
+    /**
+     * Build a TransferFromVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param from  Transfer origin to use
+     * @param to  Transfer destination to use
+     * @param amount  Transfer amount to use
+     * @return voucher  The generated voucher
+     */
+    function buildTransferFromVoucher(uint256 nonce, address from, address to, uint256 amount) external view override returns (Voucher memory voucher) {
+        voucher = _buildTransferFromVoucher(nonce, block.timestamp + 1 hours, from, to, amount, bytes(""));
+    }
+
+    /**
+     * Build a Voucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param deadline  Voucher deadline to use
+     * @param from  Transfer origin to use
+     * @param to  Transfer destination to use
+     * @param amount  Transfer amount to use
+     * @param metadata  Voucher metadata to use
+     * @return voucher  The generated voucher
+     */
+    function _buildTransferFromVoucher(uint256 nonce, uint256 deadline, address from, address to, uint256 amount, bytes memory metadata) internal pure returns (Voucher memory voucher) {
+        voucher = Voucher(
+            TRANSFER_FROM_VOUCHER_TAG,
+            nonce,
+            deadline,
+            abi.encode(TransferFromVoucher(from, to, amount)),
+            metadata
+        );
+    }
+
+    /**
      * Generate the user-readable message from the given voucher
      *
      * @param voucher  Voucher to generate the user-readable message of
