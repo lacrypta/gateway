@@ -79,6 +79,18 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
     }
 
     /**
+     * Validate the given voucher against the given signature, by the given signer
+     *
+     * @param voucher  The voucher to validate
+     * @param r  The "r" component of the associated voucher signature
+     * @param s  The "s" component of the associated voucher signature
+     * @param v  The "v" component of the associated voucher signature
+     */
+    function validateVoucher(Voucher memory voucher, bytes32 r, bytes32 s, uint8 v) external view override {
+        _validateVoucher(voucher, _joinSignatureParts(r, s, v));
+    }
+
+    /**
      * Serve the given voucher, by forwarding to the appropriate handler for the voucher's tag
      *
      * @param voucher  The voucher to serve
@@ -87,6 +99,19 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      */
     function serveVoucher(Voucher memory voucher, bytes memory signature) external override nonReentrant {
         _serveVoucher(voucher, signature);
+    }
+
+    /**
+     * Serve the given voucher, by forwarding to the appropriate handler for the voucher's tag
+     *
+     * @param voucher  The voucher to serve
+     * @param r  The "r" component of the associated voucher signature
+     * @param s  The "s" component of the associated voucher signature
+     * @param v  The "v" component of the associated voucher signature
+     * @custom:emit  VoucherServed
+     */
+    function serveVoucher(Voucher memory voucher, bytes32 r, bytes32 s, uint8 v) external override nonReentrant {
+        _serveVoucher(voucher, _joinSignatureParts(r, s, v));
     }
 
     // --- Protected handling ---------------------------------------------------------------------------------------------------------------------------------
@@ -199,5 +224,19 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
         _execute(voucher);
 
         emit VoucherServed(voucherHash, _msgSender());
+    }
+
+    // --- Private Utilities ----------------------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Join the "r", "s", and "v" components of a signature into a single bytes structure
+     *
+     * @param r  The "r" component of the signature
+     * @param s  The "s" component of the signature
+     * @param v  The "v" component of the signature
+     * @return signature  The joint signature
+     */
+    function _joinSignatureParts(bytes32 r, bytes32 s, uint8 v) private pure returns (bytes memory signature) {
+        signature = bytes.concat(r, s, bytes1(v));
     }
 }

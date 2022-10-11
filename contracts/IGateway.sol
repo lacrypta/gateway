@@ -69,6 +69,16 @@ interface IGateway {
     function validateVoucher(Voucher memory voucher, bytes memory signature) external view;
 
     /**
+     * Validate the given voucher against the given signature, by the given signer
+     *
+     * @param voucher  The voucher to validate
+     * @param r  The "r" component of the associated voucher signature
+     * @param s  The "s" component of the associated voucher signature
+     * @param v  The "v" component of the associated voucher signature
+     */
+    function validateVoucher(Voucher memory voucher, bytes32 r, bytes32 s, uint8 v) external view;
+
+    /**
      * Serve the given voucher, by forwarding to the appropriate handler for the voucher's tag
      *
      * @param voucher  The voucher to serve
@@ -76,4 +86,15 @@ interface IGateway {
      * @custom:emit  VoucherServed
      */
     function serveVoucher(Voucher memory voucher, bytes memory signature) external;
+
+    /**
+     * Serve the given voucher, by forwarding to the appropriate handler for the voucher's tag
+     *
+     * @param voucher  The voucher to serve
+     * @param r  The "r" component of the associated voucher signature
+     * @param s  The "s" component of the associated voucher signature
+     * @param v  The "v" component of the associated voucher signature
+     * @custom:emit  VoucherServed
+     */
+    function serveVoucher(Voucher memory voucher, bytes32 r, bytes32 s, uint8 v) external;
 }
