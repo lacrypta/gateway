@@ -27,5 +27,7 @@ while builtin read -r contract; do
 
     abiFileName="artifacts/${contract}/${contract##*/}"
     abiFileName="${abiFileName%.sol}.json"
-    "${THE_CP}" -f "${abiFileName}" "${newDirName}"
+    if [[ -f "${abiFileName}" ]]; then
+        "${THE_CP}" -f "${abiFileName}" "${newDirName}"
+    fi
 done < <("${THE_FIND}" 'contracts' -type f -iname '*.sol')
