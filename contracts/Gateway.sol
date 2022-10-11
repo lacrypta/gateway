@@ -6,12 +6,13 @@ import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import {SignatureChecker} from "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
 import {Multicall} from "@openzeppelin/contracts/utils/Multicall.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 import "./Strings.sol";
 
 import "./IGateway.sol";
 
-abstract contract Gateway is Context, ERC165, IGateway, Multicall {
+abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGuard {
     /**
      * Structure used to keep track of handling functions
      *
@@ -84,7 +85,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall {
      * @param signature  The associated voucher signature
      * @custom:emit  VoucherServed
      */
-    function serveVoucher(Voucher memory voucher, bytes memory signature) external override {
+    function serveVoucher(Voucher memory voucher, bytes memory signature) external override nonReentrant {
         _serveVoucher(voucher, signature);
     }
 
