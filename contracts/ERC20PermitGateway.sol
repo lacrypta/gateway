@@ -132,7 +132,7 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
      */
     function _buildPermitVoucher(uint256 nonce, uint256 deadline, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes memory metadata) internal pure returns (Voucher memory voucher) {
         voucher = Voucher(
-            TRANSFER_FROM_VOUCHER_TAG,
+            PERMIT_VOUCHER_TAG,
             nonce,
             deadline,
             abi.encode(PermitVoucher(owner, spender, value, permitDeadline, v, r, s)),
