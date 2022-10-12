@@ -8,10 +8,16 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {ERC20Gateway} from "./ERC20Gateway.sol";
 import {IERC20PermitGateway} from "./IERC20PermitGateway.sol";
 
-import "./Strings.sol";
+import {ToString} from "./ToString.sol";
+import {Epoch} from "./DateTime.sol";
 
 abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
     using SafeERC20 for IERC20Permit;
+    using ToString for Epoch;
+    using ToString for address;
+    using ToString for bytes32;
+    using ToString for uint256;
+    using ToString for uint8;
 
     // Tag associated to the PermitVoucher
     //
@@ -150,13 +156,13 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
         PermitVoucher memory decodedVoucher = abi.decode(voucher.payload, (PermitVoucher));
         message = string.concat(
             "Permit\n",
-            string.concat("owner: ", toString(decodedVoucher.owner), "\n"),
-            string.concat("spender: ", toString(decodedVoucher.spender), "\n"),
-            string.concat("value: ", IERC20Metadata(token).symbol(), ' ', toString(decodedVoucher.value, IERC20Metadata(token).decimals()), "\n"),
-            string.concat("deadline: ", toIso8601(Epoch.wrap(uint40(decodedVoucher.deadline))), "\n"),
-            string.concat("v: ", toString(decodedVoucher.v), "\n"),
-            string.concat("r: ", toString(decodedVoucher.r), "\n"),
-            string.concat("s: ", toString(decodedVoucher.s))
+            string.concat("owner: ", decodedVoucher.owner.toString(), "\n"),
+            string.concat("spender: ", decodedVoucher.spender.toString(), "\n"),
+            string.concat("value: ", IERC20Metadata(token).symbol(), ' ', decodedVoucher.value.toString(IERC20Metadata(token).decimals()), "\n"),
+            string.concat("deadline: ", Epoch.wrap(uint40(decodedVoucher.deadline)).toString(), "\n"),
+            string.concat("v: ", decodedVoucher.v.toString(), "\n"),
+            string.concat("r: ", decodedVoucher.r.toString(), "\n"),
+            string.concat("s: ", decodedVoucher.s.toString())
         );
     }
 

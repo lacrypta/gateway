@@ -8,10 +8,12 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {Gateway} from "./Gateway.sol";
 import {IERC20Gateway} from "./IERC20Gateway.sol";
 
-import "./Strings.sol";
+import {ToString} from "./ToString.sol";
 
 abstract contract ERC20Gateway is Gateway, IERC20Gateway {
     using SafeERC20 for IERC20;
+    using ToString for address;
+    using ToString for uint256;
 
     // address of the underlying ERC20 token
     address public immutable override token;
@@ -134,9 +136,9 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
         TransferFromVoucher memory decodedVoucher = abi.decode(voucher.payload, (TransferFromVoucher));
         message = string.concat(
             "TransferFrom\n",
-            string.concat("from: ", toString(decodedVoucher.from), "\n"),
-            string.concat("to: ", toString(decodedVoucher.to), "\n"),
-            string.concat("amount: ", IERC20Metadata(token).symbol(), ' ', toString(decodedVoucher.amount, IERC20Metadata(token).decimals()))
+            string.concat("from: ", decodedVoucher.from.toString(), "\n"),
+            string.concat("to: ", decodedVoucher.to.toString(), "\n"),
+            string.concat("amount: ", IERC20Metadata(token).symbol(), ' ', decodedVoucher.amount.toString(IERC20Metadata(token).decimals()))
         );
     }
 

@@ -8,11 +8,17 @@ import {SignatureChecker} from "@openzeppelin/contracts/utils/cryptography/Signa
 import {Multicall} from "@openzeppelin/contracts/utils/Multicall.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-import "./Strings.sol";
+import {ToString} from "./ToString.sol";
+import {Epoch} from "./DateTime.sol";
 
 import "./IGateway.sol";
 
 abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGuard {
+    using ToString for Epoch;
+    using ToString for bytes;
+    using ToString for uint32;
+    using ToString for uint256;
+
     /**
      * Structure used to keep track of handling functions
      *
@@ -178,11 +184,11 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
         voucherString = string.concat(
             string.concat(_message(voucher), "\n"),
             "---\n",
-            string.concat("tag: ", toString(voucher.tag), "\n"),
-            string.concat("nonce: ", toString(voucher.nonce), "\n"),
-            string.concat("deadline: ", toIso8601(Epoch.wrap(uint40(voucher.deadline))), "\n"),
-            string.concat("payload: ", toString(voucher.payload), "\n"),
-            string.concat("metadata: ", toString(voucher.metadata))
+            string.concat("tag: ", voucher.tag.toString(), "\n"),
+            string.concat("nonce: ", voucher.nonce.toString(), "\n"),
+            string.concat("deadline: ", Epoch.wrap(uint40(voucher.deadline)).toString(), "\n"),
+            string.concat("payload: ", voucher.payload.toString(), "\n"),
+            string.concat("metadata: ", voucher.metadata.toString())
         );
     }
 
