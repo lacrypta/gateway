@@ -21,9 +21,9 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @custom:member execute  The execution function
      */
     struct HandlerEntry {
-        function(Voucher memory) view returns (string memory) message;
-        function(Voucher memory) view returns (address) signer;
-        function(Voucher memory) execute;
+        function(Voucher calldata) view returns (string memory) message;
+        function(Voucher calldata) view returns (address) signer;
+        function(Voucher calldata) execute;
     }
 
     // Mapping from voucher tag to handling entry
@@ -54,7 +54,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param voucher  The voucher to retrieve the hash for
      * @return voucherHash  The voucher hash associated to the given voucher
      */
-    function hashVoucher(Voucher memory voucher) external view override returns (bytes32 voucherHash) {
+    function hashVoucher(Voucher calldata voucher) external view override returns (bytes32 voucherHash) {
         voucherHash = _hashVoucher(voucher);
     }
 
@@ -64,7 +64,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param voucher  The voucher to stringify
      * @return voucherString  The string representation to be signed of the given voucher
      */
-    function stringifyVoucher(Voucher memory voucher) external view override returns (string memory voucherString) {
+    function stringifyVoucher(Voucher calldata voucher) external view override returns (string memory voucherString) {
         voucherString = _stringifyVoucher(voucher);
     }
 
@@ -74,7 +74,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param voucher  The voucher to validate
      * @param signature  The associated voucher signature
      */
-    function validateVoucher(Voucher memory voucher, bytes memory signature) external view override {
+    function validateVoucher(Voucher calldata voucher, bytes calldata signature) external view override {
         _validateVoucher(voucher, signature);
     }
 
@@ -86,7 +86,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param s  The "s" component of the associated voucher signature
      * @param v  The "v" component of the associated voucher signature
      */
-    function validateVoucher(Voucher memory voucher, bytes32 r, bytes32 s, uint8 v) external view override {
+    function validateVoucher(Voucher calldata voucher, bytes32 r, bytes32 s, uint8 v) external view override {
         _validateVoucher(voucher, _joinSignatureParts(r, s, v));
     }
 
@@ -97,7 +97,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param signature  The associated voucher signature
      * @custom:emit  VoucherServed
      */
-    function serveVoucher(Voucher memory voucher, bytes memory signature) external override nonReentrant {
+    function serveVoucher(Voucher calldata voucher, bytes calldata signature) external override nonReentrant {
         _serveVoucher(voucher, signature);
     }
 
@@ -110,7 +110,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param v  The "v" component of the associated voucher signature
      * @custom:emit  VoucherServed
      */
-    function serveVoucher(Voucher memory voucher, bytes32 r, bytes32 s, uint8 v) external override nonReentrant {
+    function serveVoucher(Voucher calldata voucher, bytes32 r, bytes32 s, uint8 v) external override nonReentrant {
         _serveVoucher(voucher, _joinSignatureParts(r, s, v));
     }
 
@@ -145,7 +145,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param voucher  Voucher to obtain the user-readable message for
      * @return message  The voucher's user-readable message
      */
-    function _message(Voucher memory voucher) internal view returns (string memory message) {
+    function _message(Voucher calldata voucher) internal view returns (string memory message) {
         message = voucherHandler[voucher.tag].message(voucher);
     }
 
@@ -155,7 +155,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param voucher  Voucher to retrieve the signer of
      * @return signer  The voucher's signer
      */
-    function _signer(Voucher memory voucher) internal view returns (address signer) {
+    function _signer(Voucher calldata voucher) internal view returns (address signer) {
         signer = voucherHandler[voucher.tag].signer(voucher);
     }
 
@@ -164,7 +164,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      *
      * @param voucher  Voucher to execute
      */
-    function _execute(Voucher memory voucher) internal {
+    function _execute(Voucher calldata voucher) internal {
         voucherHandler[voucher.tag].execute(voucher);
     }
 
@@ -174,7 +174,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param voucher  The voucher to stringify
      * @return voucherString  The string representation to be signed of the given voucher
      */
-    function _stringifyVoucher(Voucher memory voucher) internal view returns (string memory voucherString) {
+    function _stringifyVoucher(Voucher calldata voucher) internal view returns (string memory voucherString) {
         voucherString = string.concat(
             string.concat(_message(voucher), "\n"),
             "---\n",
@@ -192,7 +192,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param voucher  The voucher to retrieve the hash for
      * @return voucherHash  The voucher hash associated to the given voucher
      */
-    function _hashVoucher(Voucher memory voucher) internal view returns (bytes32 voucherHash) {
+    function _hashVoucher(Voucher calldata voucher) internal view returns (bytes32 voucherHash) {
         voucherHash = keccak256(bytes(_stringifyVoucher(voucher)));
     }
 
@@ -202,7 +202,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param voucher  The voucher to validate
      * @param signature  The associated voucher signature
      */
-    function _validateVoucher(Voucher memory voucher, bytes memory signature) internal view {
+    function _validateVoucher(Voucher calldata voucher, bytes memory signature) internal view {
         require(SignatureChecker.isValidSignatureNow(_signer(voucher), _hashVoucher(voucher), signature), "Gateway: invalid voucher signature");
         require(block.timestamp <= voucher.deadline, "Gateway: expired deadline");
     }
@@ -214,7 +214,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param signature  The associated voucher signature
      * @custom:emit  VoucherServed
      */
-    function _serveVoucher(Voucher memory voucher, bytes memory signature) internal {
+    function _serveVoucher(Voucher calldata voucher, bytes memory signature) internal {
         _validateVoucher(voucher, signature);
 
         bytes32 voucherHash = _hashVoucher(voucher);

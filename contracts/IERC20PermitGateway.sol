@@ -48,7 +48,7 @@ interface IERC20PermitGateway is IERC20Gateway {
      * @param metadata  Voucher metadata to use
      * @return voucher  The generated voucher
      */
-    function buildPermitVoucher(uint256 nonce, uint256 deadline, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes memory metadata) external view returns (Voucher memory voucher);
+    function buildPermitVoucher(uint256 nonce, uint256 deadline, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes calldata metadata) external view returns (Voucher memory voucher);
 
     /**
      * Build a PermitVoucher from the given parameters
@@ -64,7 +64,7 @@ interface IERC20PermitGateway is IERC20Gateway {
      * @param metadata  Voucher metadata to use
      * @return voucher  The generated voucher
      */
-    function buildPermitVoucher(uint256 nonce, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes memory metadata) external view returns (Voucher memory voucher);
+    function buildPermitVoucher(uint256 nonce, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes calldata metadata) external view returns (Voucher memory voucher);
 
     /**
      * Build a PermitVoucher from the given parameters

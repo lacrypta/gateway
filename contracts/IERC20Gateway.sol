@@ -42,7 +42,7 @@ interface IERC20Gateway is IGateway {
      * @param metadata  Voucher metadata to use
      * @return voucher  The generated voucher
      */
-    function buildTransferFromVoucher(uint256 nonce, uint256 deadline, address from, address to, uint256 amount, bytes memory metadata) external view returns (Voucher memory voucher);
+    function buildTransferFromVoucher(uint256 nonce, uint256 deadline, address from, address to, uint256 amount, bytes calldata metadata) external view returns (Voucher memory voucher);
 
     /**
      * Build a TransferFromVoucher from the given parameters
@@ -54,7 +54,7 @@ interface IERC20Gateway is IGateway {
      * @param metadata  Voucher metadata to use
      * @return voucher  The generated voucher
      */
-    function buildTransferFromVoucher(uint256 nonce, address from, address to, uint256 amount, bytes memory metadata) external view returns (Voucher memory voucher);
+    function buildTransferFromVoucher(uint256 nonce, address from, address to, uint256 amount, bytes calldata metadata) external view returns (Voucher memory voucher);
 
     /**
      * Build a TransferFromVoucher from the given parameters

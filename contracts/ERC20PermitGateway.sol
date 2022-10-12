@@ -58,7 +58,7 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
      * @param metadata  Voucher metadata to use
      * @return voucher  The generated voucher
      */
-    function buildPermitVoucher(uint256 nonce, uint256 deadline, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes memory metadata) external pure override returns (Voucher memory voucher) {
+    function buildPermitVoucher(uint256 nonce, uint256 deadline, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes calldata metadata) external pure override returns (Voucher memory voucher) {
         voucher = _buildPermitVoucher(nonce, deadline, owner, spender, value, permitDeadline, v, r, s, metadata);
     }
 
@@ -76,7 +76,7 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
      * @param metadata  Voucher metadata to use
      * @return voucher  The generated voucher
      */
-    function buildPermitVoucher(uint256 nonce, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes memory metadata) external view override returns (Voucher memory voucher) {
+    function buildPermitVoucher(uint256 nonce, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes calldata metadata) external view override returns (Voucher memory voucher) {
         voucher = _buildPermitVoucher(nonce, block.timestamp + 1 hours, owner, spender, value, permitDeadline, v, r, s, metadata);
     }
 
@@ -146,7 +146,7 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
      * @param voucher  Voucher to generate the user-readable message of
      * @return message  The voucher's generated user-readable message
      */
-    function _generatePermitVoucherMessage(Voucher memory voucher) internal view returns (string memory message) {
+    function _generatePermitVoucherMessage(Voucher calldata voucher) internal view returns (string memory message) {
         PermitVoucher memory decodedVoucher = abi.decode(voucher.payload, (PermitVoucher));
         message = string.concat(
             "Permit\n",
@@ -166,7 +166,7 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
      * @param voucher  Voucher to extract the signer of
      * @return signer  The voucher's signer
      */
-    function _extractPermitVoucherSigner(Voucher memory voucher) internal pure returns (address signer) {
+    function _extractPermitVoucherSigner(Voucher calldata voucher) internal pure returns (address signer) {
         PermitVoucher memory decodedVoucher = abi.decode(voucher.payload, (PermitVoucher));
         signer = decodedVoucher.owner;
     }
@@ -176,7 +176,7 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
      *
      * @param voucher  The voucher to execute
      */
-    function _executePermitVoucher(Voucher memory voucher) internal {
+    function _executePermitVoucher(Voucher calldata voucher) internal {
         _beforePermitWithVoucher(voucher);
 
         PermitVoucher memory decodedVoucher = abi.decode(voucher.payload, (PermitVoucher));
@@ -198,12 +198,12 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
      *
      * @param voucher  The voucher being executed
      */
-    function _beforePermitWithVoucher(Voucher memory voucher) internal virtual {}
+    function _beforePermitWithVoucher(Voucher calldata voucher) internal virtual {}
 
     /**
      * Hook called after the actual permit() call is executed
      *
      * @param voucher  The voucher being executed
      */
-    function _afterPermitWithVoucher(Voucher memory voucher) internal virtual {}
+    function _afterPermitWithVoucher(Voucher calldata voucher) internal virtual {}
 }

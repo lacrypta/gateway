@@ -58,7 +58,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
      * @param metadata  Voucher metadata to use
      * @return voucher  The generated voucher
      */
-    function buildTransferFromVoucher(uint256 nonce, uint256 deadline, address from, address to, uint256 amount, bytes memory metadata) external pure override returns (Voucher memory voucher) {
+    function buildTransferFromVoucher(uint256 nonce, uint256 deadline, address from, address to, uint256 amount, bytes calldata metadata) external pure override returns (Voucher memory voucher) {
         voucher = _buildTransferFromVoucher(nonce, deadline, from, to, amount, metadata);
     }
 
@@ -72,7 +72,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
      * @param metadata  Voucher metadata to use
      * @return voucher  The generated voucher
      */
-    function buildTransferFromVoucher(uint256 nonce, address from, address to, uint256 amount, bytes memory metadata) external view override returns (Voucher memory voucher) {
+    function buildTransferFromVoucher(uint256 nonce, address from, address to, uint256 amount, bytes calldata metadata) external view override returns (Voucher memory voucher) {
         voucher = _buildTransferFromVoucher(nonce, block.timestamp + 1 hours, from, to, amount, metadata);
     }
 
@@ -130,7 +130,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
      * @param voucher  Voucher to generate the user-readable message of
      * @return message  The voucher's generated user-readable message
      */
-    function _generateTransferFromVoucherMessage(Voucher memory voucher) internal view returns (string memory message) {
+    function _generateTransferFromVoucherMessage(Voucher calldata voucher) internal view returns (string memory message) {
         TransferFromVoucher memory decodedVoucher = abi.decode(voucher.payload, (TransferFromVoucher));
         message = string.concat(
             "TransferFrom\n",
@@ -146,7 +146,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
      * @param voucher  Voucher to extract the signer of
      * @return signer  The voucher's signer
      */
-    function _extractTransferFromVoucherSigner(Voucher memory voucher) internal pure returns (address signer) {
+    function _extractTransferFromVoucherSigner(Voucher calldata voucher) internal pure returns (address signer) {
         TransferFromVoucher memory decodedVoucher = abi.decode(voucher.payload, (TransferFromVoucher));
         signer = decodedVoucher.from;
     }
@@ -156,7 +156,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
      *
      * @param voucher  The voucher to execute
      */
-    function _executeTransferFromVoucher(Voucher memory voucher) internal {
+    function _executeTransferFromVoucher(Voucher calldata voucher) internal {
         _beforeTransferFromWithVoucher(voucher);
 
         TransferFromVoucher memory decodedVoucher = abi.decode(voucher.payload, (TransferFromVoucher));
@@ -170,12 +170,12 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
      *
      * @param voucher  The voucher being executed
      */
-    function _beforeTransferFromWithVoucher(Voucher memory voucher) internal virtual {}
+    function _beforeTransferFromWithVoucher(Voucher calldata voucher) internal virtual {}
 
     /**
      * Hook called after the actual transferFrom() call is executed
      *
      * @param voucher  The voucher being executed
      */
-    function _afterTransferFromWithVoucher(Voucher memory voucher) internal virtual {}
+    function _afterTransferFromWithVoucher(Voucher calldata voucher) internal virtual {}
 }
