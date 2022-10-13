@@ -15,7 +15,8 @@
   },
   "files": [
     "/abi",
-    "/contracts"
+    "/contracts",
+    "/typechain-types"
   ],
   "scripts": {
     "compile": "hardhat compile",
