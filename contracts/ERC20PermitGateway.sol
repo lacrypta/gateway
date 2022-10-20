@@ -48,7 +48,7 @@ abstract contract ERC20PermitGateway is Gateway, IERC20PermitGateway {
      *
      * @return _erc20Token  The address of the underlying ERC20 token
      */
-    function token() external view returns (address _erc20Token) {
+    function token() external view virtual returns (address _erc20Token) {
         _erc20Token = _token;
     }
 
