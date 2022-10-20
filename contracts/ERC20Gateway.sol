@@ -138,7 +138,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
             "TransferFrom\n",
             string.concat("from: ", decodedVoucher.from.toString(), "\n"),
             string.concat("to: ", decodedVoucher.to.toString(), "\n"),
-            string.concat("amount: ", IERC20Metadata(token).symbol(), ' ', decodedVoucher.amount.toString(IERC20Metadata(token).decimals()))
+            string.concat("amount: ", IERC20Metadata(token).symbol(), " ", decodedVoucher.amount.toString(IERC20Metadata(token).decimals()))
         );
     }
 

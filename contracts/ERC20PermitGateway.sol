@@ -162,7 +162,7 @@ abstract contract ERC20PermitGateway is Gateway, IERC20PermitGateway {
             "Permit\n",
             string.concat("owner: ", decodedVoucher.owner.toString(), "\n"),
             string.concat("spender: ", decodedVoucher.spender.toString(), "\n"),
-            string.concat("value: ", IERC20Metadata(token).symbol(), ' ', decodedVoucher.value.toString(IERC20Metadata(token).decimals()), "\n"),
+            string.concat("value: ", IERC20Metadata(token).symbol(), " ", decodedVoucher.value.toString(IERC20Metadata(token).decimals()), "\n"),
             string.concat("deadline: ", Epoch.wrap(uint40(decodedVoucher.deadline)).toString(), "\n"),
             string.concat("v: ", decodedVoucher.v.toString(), "\n"),
             string.concat("r: ", decodedVoucher.r.toString(), "\n"),

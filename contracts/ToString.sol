@@ -50,7 +50,7 @@ library ToString {
                     value /= 10;
                     decimals--;
                 }
-                buffer[--i] = '.';
+                buffer[--i] = ".";
             }
             // output a 0 in case nothing left
             if (value == 0) {
@@ -91,7 +91,7 @@ library ToString {
     function toString(int256 value, uint8 decimals) public pure returns (string memory) {
         unchecked {
             if (value < 0) {
-                return string.concat('-', toString(value == type(int256).min ? 1 + type(uint256).max >> 1 : uint256(-value), decimals));
+                return string.concat("-", toString(value == type(int256).min ? 1 + type(uint256).max >> 1 : uint256(-value), decimals));
             } else {
                 return toString(uint256(value), decimals);
             }
@@ -111,12 +111,12 @@ library ToString {
             uint256 len = value.length;
             bytes memory buffer = new bytes(len * 2 + 2);
 
-            buffer[0] = '[';
+            buffer[0] = "[";
             for ((uint256 i, uint256 j, uint256 k) = (0, 1, 2); i < len; (i, j, k) = (i + 1, j + 2, k + 2)) {
                 uint8 val = uint8(value[i]);
                 (buffer[j], buffer[k]) = (HEX_DIGITS[val >> 4], HEX_DIGITS[val & 0x0f]);
             }
-            buffer[len * 2 + 1] = ']';
+            buffer[len * 2 + 1] = "]";
 
             return string(buffer);
         }
@@ -582,12 +582,12 @@ library ToString {
 
             bytes20 nValue = bytes20(value);
             bytes memory buffer = new bytes(42);
-            buffer[0] = '<';
+            buffer[0] = "<";
             for ((uint256 i, uint256 j, uint256 k) = (0, 1, 2); i < 20; (i, j, k) = (i + 1, j + 2, k + 2)) {
                 uint8 val = uint8(nValue[i]);
                 (buffer[j], buffer[k]) = (HEX_DIGITS[val >> 4], HEX_DIGITS[val & 0x0f]);
             }
-            buffer[41] = '>';
+            buffer[41] = ">";
             return string(buffer);
         }
     }
