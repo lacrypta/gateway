@@ -20,7 +20,7 @@ abstract contract ERC20PermitGateway is Gateway, IERC20PermitGateway {
     using ToString for uint8;
 
     // address of the underlying ERC20 token
-    address public immutable override token;
+    address internal immutable _token;
 
     // Tag associated to the PermitVoucher
     //
@@ -32,15 +32,24 @@ abstract contract ERC20PermitGateway is Gateway, IERC20PermitGateway {
     /**
      * Build a new ERC20PermitGateway from the given token address
      *
-     * @param _token  Underlying ERC20 token
+     * @param theToken  Underlying ERC20 token
      */
-    constructor(address _token) {
-        token = _token;
+    constructor(address theToken) {
+        _token = theToken;
         _addHandler(PERMIT_VOUCHER_TAG, HandlerEntry({
             message: _generatePermitVoucherMessage,
             signer: _extractPermitVoucherSigner,
             execute: _executePermitVoucher
         }));
+    }
+
+    /**
+     * Retrieve the address of the underlying ERC20 token
+     *
+     * @return _erc20Token  The address of the underlying ERC20 token
+     */
+    function token() external view returns (address _erc20Token) {
+        _erc20Token = _token;
     }
 
     /**
@@ -162,7 +171,7 @@ abstract contract ERC20PermitGateway is Gateway, IERC20PermitGateway {
             "Permit\n",
             string.concat("owner: ", decodedVoucher.owner.toString(), "\n"),
             string.concat("spender: ", decodedVoucher.spender.toString(), "\n"),
-            string.concat("value: ", IERC20Metadata(token).symbol(), " ", decodedVoucher.value.toString(IERC20Metadata(token).decimals()), "\n"),
+            string.concat("value: ", IERC20Metadata(_token).symbol(), " ", decodedVoucher.value.toString(IERC20Metadata(_token).decimals()), "\n"),
             string.concat("deadline: ", Epoch.wrap(uint40(decodedVoucher.deadline)).toString(), "\n"),
             string.concat("v: ", decodedVoucher.v.toString(), "\n"),
             string.concat("r: ", decodedVoucher.r.toString(), "\n"),
@@ -190,7 +199,7 @@ abstract contract ERC20PermitGateway is Gateway, IERC20PermitGateway {
         _beforePermitWithVoucher(voucher);
 
         PermitVoucher memory decodedVoucher = abi.decode(voucher.payload, (PermitVoucher));
-        IERC20Permit(token).safePermit(
+        IERC20Permit(_token).safePermit(
             decodedVoucher.owner,
             decodedVoucher.spender,
             decodedVoucher.value,

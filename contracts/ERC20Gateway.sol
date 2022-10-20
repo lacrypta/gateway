@@ -16,7 +16,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
     using ToString for uint256;
 
     // address of the underlying ERC20 token
-    address public immutable override token;
+    address internal immutable _token;
 
     // Tag associated to the TransferFromVoucher
     //
@@ -28,15 +28,24 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
     /**
      * Build a new ERC20Gateway from the given token address
      *
-     * @param _token  Underlying ERC20 token
+     * @param theToken  Underlying ERC20 token
      */
-    constructor(address _token) {
-        token = _token;
+    constructor(address theToken) {
+        _token = theToken;
         _addHandler(TRANSFER_FROM_VOUCHER_TAG, HandlerEntry({
             message: _generateTransferFromVoucherMessage,
             signer: _extractTransferFromVoucherSigner,
             execute: _executeTransferFromVoucher
         }));
+    }
+
+    /**
+     * Retrieve the address of the underlying ERC20 token
+     *
+     * @return _erc20Token  The address of the underlying ERC20 token
+     */
+    function token() external view returns (address _erc20Token) {
+        _erc20Token = _token;
     }
 
     /**
@@ -138,7 +147,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
             "TransferFrom\n",
             string.concat("from: ", decodedVoucher.from.toString(), "\n"),
             string.concat("to: ", decodedVoucher.to.toString(), "\n"),
-            string.concat("amount: ", IERC20Metadata(token).symbol(), " ", decodedVoucher.amount.toString(IERC20Metadata(token).decimals()))
+            string.concat("amount: ", IERC20Metadata(_token).symbol(), " ", decodedVoucher.amount.toString(IERC20Metadata(_token).decimals()))
         );
     }
 
@@ -162,7 +171,7 @@ abstract contract ERC20Gateway is Gateway, IERC20Gateway {
         _beforeTransferFromWithVoucher(voucher);
 
         TransferFromVoucher memory decodedVoucher = abi.decode(voucher.payload, (TransferFromVoucher));
-        IERC20(token).safeTransferFrom(decodedVoucher.from, decodedVoucher.to, decodedVoucher.amount);
+        IERC20(_token).safeTransferFrom(decodedVoucher.from, decodedVoucher.to, decodedVoucher.amount);
 
         _afterTransferFromWithVoucher(voucher);
     }

@@ -7,9 +7,9 @@ interface IERC20Gateway is IGateway {
     /**
      * Retrieve the address of the underlying ERC20 token
      *
-     * @return  The address of the underlying ERC20 token
+     * @return _erc20Token  The address of the underlying ERC20 token
      */
-    function token() external view returns (address);
+    function token() external view returns (address _erc20Token);
 
     /**
      * transferFrom() voucher
