@@ -1,10 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 pragma solidity ^0.8.17;
 
+import {IGateway} from "./IGateway.sol";
 
-import {IERC20Gateway} from "./IERC20Gateway.sol";
+interface IERC20PermitGateway is IGateway {
+    /**
+     * Retrieve the address of the underlying ERC20 token
+     *
+     * @return  The address of the underlying ERC20 token
+     */
+    function token() external view returns (address);
 
-interface IERC20PermitGateway is IERC20Gateway {
     /**
      * permit() voucher
      *

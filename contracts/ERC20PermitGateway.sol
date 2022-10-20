@@ -5,19 +5,22 @@ import {IERC20Permit} from "@openzeppelin/contracts/token/ERC20/extensions/draft
 import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-import {ERC20Gateway} from "./ERC20Gateway.sol";
+import {Gateway} from "./Gateway.sol";
 import {IERC20PermitGateway} from "./IERC20PermitGateway.sol";
 
 import {ToString} from "./ToString.sol";
 import {Epoch} from "./DateTime.sol";
 
-abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
+abstract contract ERC20PermitGateway is Gateway, IERC20PermitGateway {
     using SafeERC20 for IERC20Permit;
     using ToString for Epoch;
     using ToString for address;
     using ToString for bytes32;
     using ToString for uint256;
     using ToString for uint8;
+
+    // address of the underlying ERC20 token
+    address public immutable override token;
 
     // Tag associated to the PermitVoucher
     //
@@ -31,7 +34,8 @@ abstract contract ERC20PermitGateway is ERC20Gateway, IERC20PermitGateway {
      *
      * @param _token  Underlying ERC20 token
      */
-    constructor(address _token) ERC20Gateway(_token) {
+    constructor(address _token) {
+        token = _token;
         _addHandler(PERMIT_VOUCHER_TAG, HandlerEntry({
             message: _generatePermitVoucherMessage,
             signer: _extractPermitVoucherSigner,
