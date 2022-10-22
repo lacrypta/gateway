@@ -5,6 +5,8 @@ import {Context} from "@openzeppelin/contracts/utils/Context.sol";
 import {ERC165} from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import {SignatureChecker} from "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
+import {ECDSA} from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+
 import {Multicall} from "@openzeppelin/contracts/utils/Multicall.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
@@ -199,7 +201,7 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @return voucherHash  The voucher hash associated to the given voucher
      */
     function _hashVoucher(Voucher calldata voucher) internal view returns (bytes32 voucherHash) {
-        voucherHash = keccak256(bytes(_stringifyVoucher(voucher)));
+        voucherHash = ECDSA.toEthSignedMessageHash(bytes(_stringifyVoucher(voucher)));
     }
 
     /**
