@@ -210,9 +210,11 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param voucher  The voucher to validate
      * @param signature  The associated voucher signature
      */
-    function _validateVoucher(Voucher calldata voucher, bytes memory signature) internal view {
-        require(SignatureChecker.isValidSignatureNow(_signer(voucher), _hashVoucher(voucher), signature), "Gateway: invalid voucher signature");
+    function _validateVoucher(Voucher calldata voucher, bytes memory signature) internal view returns(bytes32 voucherHash) {
         require(block.timestamp <= voucher.deadline, "Gateway: expired deadline");
+        voucherHash = _hashVoucher(voucher);
+        require(voucherServed[voucherHash] == false, "Gateway: voucher already served");
+        require(SignatureChecker.isValidSignatureNow(_signer(voucher), voucherHash, signature), "Gateway: invalid voucher signature");
     }
 
     /**
@@ -223,10 +225,8 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @custom:emit  VoucherServed
      */
     function _serveVoucher(Voucher calldata voucher, bytes memory signature) internal {
-        _validateVoucher(voucher, signature);
+        bytes32 voucherHash = _validateVoucher(voucher, signature);
 
-        bytes32 voucherHash = _hashVoucher(voucher);
-        require(voucherServed[voucherHash] == false, "Gateway: voucher already served");
         voucherServed[voucherHash] = true;
 
         _execute(voucher);
