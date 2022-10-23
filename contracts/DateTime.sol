@@ -18,6 +18,7 @@ type Quarters is int8;
  * @custom:member second  The second the given epoch encodes
  * @custom:member tzHours  The timezone offset hours
  * @custom:member tzMinutes  The timezone offset minutes (always multiple of 15)
+ * @custom:member epoch  Calculated epoch value, taking timezoneOffset into account
  */
 struct DateTimeParts {
     uint256 year;
@@ -28,6 +29,7 @@ struct DateTimeParts {
     uint256 second;
     int8 tzHours;
     uint256 tzMinutes;
+    uint256 epoch;
 }
 
 /**
@@ -57,18 +59,15 @@ function dateTimeParts(Epoch value, Quarters tzOffset) pure returns (DateTimePar
         DateTimeParts memory result;
 
         int256 tzOffsetInSeconds = int256(Quarters.unwrap(tzOffset)) * 900;
-        uint256 nValue;
         if (tzOffsetInSeconds < 0) {
             require(uint256(-tzOffsetInSeconds) <= Epoch.unwrap(value), "Strings: epoch time too small for timezone offset");
-            nValue = Epoch.unwrap(value) - uint256(-tzOffsetInSeconds);
+            result.epoch = Epoch.unwrap(value) - uint256(-tzOffsetInSeconds);
         } else {
-            nValue = Epoch.unwrap(value) + uint256(tzOffsetInSeconds);
+            result.epoch = Epoch.unwrap(value) + uint256(tzOffsetInSeconds);
         }
 
-        require(nValue <= 253402311599, "Strings: epoch time too big");
-
         {
-            uint256 z = nValue / 86400 + 719468;
+            uint256 z = result.epoch / 86400 + 719468;
             uint256 era = z / 146097;
             uint256 doe = z - era * 146097;
             uint256 yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
@@ -81,7 +80,7 @@ function dateTimeParts(Epoch value, Quarters tzOffset) pure returns (DateTimePar
         }
 
         {
-            uint256 w = nValue % 86400;
+            uint256 w = result.epoch % 86400;
             //
             result.hour = w / 3600;
             result.minute = (w % 3600) / 60;

@@ -614,6 +614,7 @@ library ToString {
             bytes10 DEC_DIGITS = "0123456789";
 
             DateTimeParts memory parts = dateTimeParts(value, tzOffset);
+            require(parts.epoch <= 253402311599, "Strings: epoch time too big");
 
             bytes memory buffer = "0000-00-00T00:00:00";
 
