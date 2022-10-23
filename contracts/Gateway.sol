@@ -212,11 +212,19 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param signature  The associated voucher signature
      */
     function _validateVoucher(Voucher calldata voucher, bytes memory signature) internal view returns(bytes32 voucherHash) {
-        require(voucher.validSince <= block.timestamp, "Gateway: not yet active");
-        require(block.timestamp <= voucher.validUntil, "Gateway: expired");
+        if (block.timestamp < voucher.validSince) {
+            revert NotYetActive(voucher.validSince);
+        }
+        if (voucher.validUntil < block.timestamp) {
+            revert Expired(voucher.validUntil);
+        }
         voucherHash = _hashVoucher(voucher);
-        require(voucherServed[voucherHash] == false, "Gateway: voucher already served");
-        require(SignatureChecker.isValidSignatureNow(_signer(voucher), voucherHash, signature), "Gateway: invalid voucher signature");
+        if (voucherServed[voucherHash]) {
+            revert AlreadyServed();
+        }
+        if (!SignatureChecker.isValidSignatureNow(_signer(voucher), voucherHash, signature)) {
+            revert InvalidSignature();
+        }
     }
 
     /**

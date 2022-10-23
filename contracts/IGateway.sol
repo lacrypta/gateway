@@ -3,6 +3,32 @@ pragma solidity ^0.8.17;
 
 interface IGateway {
     /**
+     * Raised upon encountering a voucher that is not yet active
+     *
+     * @param validSince  The minimum block timestamp this voucher will be valid since
+     */
+    error NotYetActive(uint256 validSince);
+
+    /**
+     * Raised upon encountering a voucher that has already expired
+     *
+     * @param validUntil  The maximum block timestamp this voucher was valid until
+     */
+    error Expired(uint256 validUntil);
+
+    /**
+     * Raised upon encountering an already served voucher
+     *
+     */
+    error AlreadyServed();
+
+    /**
+     * Raised upon encountering a voucher with an invalid signature
+     *
+     */
+    error InvalidSignature();
+
+    /**
      * Voucher --- tagged union used for specific vouchers' implementation
      *
      * @custom:member tag  An integer representing the type of voucher this particular voucher is
