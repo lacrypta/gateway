@@ -7,7 +7,8 @@ interface IGateway {
      *
      * @custom:member tag  An integer representing the type of voucher this particular voucher is
      * @custom:member nonce  The voucher nonce to use
-     * @custom:member deadline  The maximum block timestamp this voucher is valid until
+     * @custom:member validSince  The minimum block timestamp this voucher is valid since
+     * @custom:member validUntil  The maximum block timestamp this voucher is valid until
      * @custom:member payload  Actual abi.encode()-ed payload (used for serving the call proper)
      * @custom:member metadata  Additional abi.encode()-ed metadata (used for administrative tasks)
      */
@@ -15,7 +16,8 @@ interface IGateway {
         uint32 tag;
         //
         uint256 nonce;
-        uint256 deadline;
+        uint256 validSince;
+        uint256 validUntil;
         //
         bytes payload;
         bytes metadata;

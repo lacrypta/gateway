@@ -188,7 +188,8 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
             "---\n",
             string.concat("tag: ", voucher.tag.toString(), "\n"),
             string.concat("nonce: ", voucher.nonce.toString(), "\n"),
-            string.concat("deadline: ", Epoch.wrap(uint40(voucher.deadline)).toString(), "\n"),
+            string.concat("valid since: ", Epoch.wrap(uint40(voucher.validSince)).toString(), "\n"),
+            string.concat("valid until: ", Epoch.wrap(uint40(voucher.validUntil)).toString(), "\n"),
             string.concat("payload: ", voucher.payload.toString(), "\n"),
             string.concat("metadata: ", voucher.metadata.toString())
         );
@@ -211,7 +212,8 @@ abstract contract Gateway is Context, ERC165, IGateway, Multicall, ReentrancyGua
      * @param signature  The associated voucher signature
      */
     function _validateVoucher(Voucher calldata voucher, bytes memory signature) internal view returns(bytes32 voucherHash) {
-        require(block.timestamp <= voucher.deadline, "Gateway: expired deadline");
+        require(voucher.validSince <= block.timestamp, "Gateway: not yet active");
+        require(block.timestamp <= voucher.validUntil, "Gateway: expired");
         voucherHash = _hashVoucher(voucher);
         require(voucherServed[voucherHash] == false, "Gateway: voucher already served");
         require(SignatureChecker.isValidSignatureNow(_signer(voucher), voucherHash, signature), "Gateway: invalid voucher signature");

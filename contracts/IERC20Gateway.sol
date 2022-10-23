@@ -35,14 +35,28 @@ interface IERC20Gateway is IGateway {
      * Build a TransferFromVoucher from the given parameters
      *
      * @param nonce  Nonce to use
-     * @param deadline  Voucher deadline to use
+     * @param validSince  Voucher validSince to use
+     * @param validUntil  Voucher validUntil to use
      * @param from  Transfer origin to use
      * @param to  Transfer destination to use
      * @param amount  Transfer amount to use
      * @param metadata  Voucher metadata to use
      * @return voucher  The generated voucher
      */
-    function buildTransferFromVoucher(uint256 nonce, uint256 deadline, address from, address to, uint256 amount, bytes calldata metadata) external view returns (Voucher memory voucher);
+    function buildTransferFromVoucher(uint256 nonce, uint256 validSince, uint256 validUntil, address from, address to, uint256 amount, bytes calldata metadata) external view returns (Voucher memory voucher);
+
+    /**
+     * Build a TransferFromVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param validUntil  Voucher validUntil to use
+     * @param from  Transfer origin to use
+     * @param to  Transfer destination to use
+     * @param amount  Transfer amount to use
+     * @param metadata  Voucher metadata to use
+     * @return voucher  The generated voucher
+     */
+    function buildTransferFromVoucher(uint256 nonce, uint256 validUntil, address from, address to, uint256 amount, bytes calldata metadata) external view returns (Voucher memory voucher);
 
     /**
      * Build a TransferFromVoucher from the given parameters
@@ -60,13 +74,26 @@ interface IERC20Gateway is IGateway {
      * Build a TransferFromVoucher from the given parameters
      *
      * @param nonce  Nonce to use
-     * @param deadline  Voucher deadline to use
+     * @param validSince  Voucher validSince to use
+     * @param validUntil  Voucher validUntil to use
      * @param from  Transfer origin to use
      * @param to  Transfer destination to use
      * @param amount  Transfer amount to use
-     * @return voucher  The generated voucher
+     * 0@return voucher  The generated voucher
      */
-    function buildTransferFromVoucher(uint256 nonce, uint256 deadline, address from, address to, uint256 amount) external view returns (Voucher memory voucher);
+    function buildTransferFromVoucher(uint256 nonce, uint256 validSince, uint256 validUntil, address from, address to, uint256 amount) external view returns (Voucher memory voucher);
+
+    /**
+     * Build a TransferFromVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param validUntil  Voucher validUntil to use
+     * @param from  Transfer origin to use
+     * @param to  Transfer destination to use
+     * @param amount  Transfer amount to use
+     * 0@return voucher  The generated voucher
+     */
+    function buildTransferFromVoucher(uint256 nonce, uint256 validUntil, address from, address to, uint256 amount) external view returns (Voucher memory voucher);
 
     /**
      * Build a TransferFromVoucher from the given parameters

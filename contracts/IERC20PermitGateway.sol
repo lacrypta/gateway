@@ -42,50 +42,36 @@ interface IERC20PermitGateway is IGateway {
      * Build a PermitVoucher from the given parameters
      *
      * @param nonce  Nonce to use
-     * @param deadline  Voucher deadline to use
+     * @param validSince  Voucher validSince to use
+     * @param validUntil  Voucher validUntil to use
      * @param owner  Permit owner address to use
      * @param spender  Permit spender address to use
      * @param value  Permit amount to use
-     * @param permitDeadline  Permit deadline to use
+     * @param deadline  Permit deadline to use
      * @param v  Permit's signature "v" component to use
      * @param r  Permit's signature "r" component to use
      * @param s  Permit's signature "s" component to use
      * @param metadata  Voucher metadata to use
      * @return voucher  The generated voucher
      */
-    function buildPermitVoucher(uint256 nonce, uint256 deadline, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes calldata metadata) external view returns (Voucher memory voucher);
+    function buildPermitVoucher(uint256 nonce, uint256 validSince, uint256 validUntil, address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s, bytes calldata metadata) external view returns (Voucher memory voucher);
 
     /**
      * Build a PermitVoucher from the given parameters
      *
      * @param nonce  Nonce to use
+     * @param validUntil  Voucher validUntil to use
      * @param owner  Permit owner address to use
      * @param spender  Permit spender address to use
      * @param value  Permit amount to use
-     * @param permitDeadline  Permit deadline to use
+     * @param deadline  Permit deadline to use
      * @param v  Permit's signature "v" component to use
      * @param r  Permit's signature "r" component to use
      * @param s  Permit's signature "s" component to use
      * @param metadata  Voucher metadata to use
      * @return voucher  The generated voucher
      */
-    function buildPermitVoucher(uint256 nonce, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s, bytes calldata metadata) external view returns (Voucher memory voucher);
-
-    /**
-     * Build a PermitVoucher from the given parameters
-     *
-     * @param nonce  Nonce to use
-     * @param deadline  Voucher deadline to use
-     * @param owner  Permit owner address to use
-     * @param spender  Permit spender address to use
-     * @param value  Permit amount to use
-     * @param permitDeadline  Permit deadline to use
-     * @param v  Permit's signature "v" component to use
-     * @param r  Permit's signature "r" component to use
-     * @param s  Permit's signature "s" component to use
-     * @return voucher  The generated voucher
-     */
-    function buildPermitVoucher(uint256 nonce, uint256 deadline, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s) external view returns (Voucher memory voucher);
+    function buildPermitVoucher(uint256 nonce, uint256 validUntil, address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s, bytes calldata metadata) external view returns (Voucher memory voucher);
 
     /**
      * Build a PermitVoucher from the given parameters
@@ -94,11 +80,60 @@ interface IERC20PermitGateway is IGateway {
      * @param owner  Permit owner address to use
      * @param spender  Permit spender address to use
      * @param value  Permit amount to use
-     * @param permitDeadline  Permit deadline to use
+     * @param deadline  Permit deadline to use
+     * @param v  Permit's signature "v" component to use
+     * @param r  Permit's signature "r" component to use
+     * @param s  Permit's signature "s" component to use
+     * @param metadata  Voucher metadata to use
+     * @return voucher  The generated voucher
+     */
+    function buildPermitVoucher(uint256 nonce, address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s, bytes calldata metadata) external view returns (Voucher memory voucher);
+
+    /**
+     * Build a PermitVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param validSince  Voucher validSince to use
+     * @param validUntil  Voucher validUntil to use
+     * @param owner  Permit owner address to use
+     * @param spender  Permit spender address to use
+     * @param value  Permit amount to use
+     * @param deadline  Permit deadline to use
      * @param v  Permit's signature "v" component to use
      * @param r  Permit's signature "r" component to use
      * @param s  Permit's signature "s" component to use
      * @return voucher  The generated voucher
      */
-    function buildPermitVoucher(uint256 nonce, address owner, address spender, uint256 value, uint256 permitDeadline, uint8 v, bytes32 r, bytes32 s) external view returns (Voucher memory voucher);
+    function buildPermitVoucher(uint256 nonce, uint256 validSince, uint256 validUntil, address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external view returns (Voucher memory voucher);
+
+    /**
+     * Build a PermitVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param validUntil  Voucher validUntil to use
+     * @param owner  Permit owner address to use
+     * @param spender  Permit spender address to use
+     * @param value  Permit amount to use
+     * @param deadline  Permit deadline to use
+     * @param v  Permit's signature "v" component to use
+     * @param r  Permit's signature "r" component to use
+     * @param s  Permit's signature "s" component to use
+     * @return voucher  The generated voucher
+     */
+    function buildPermitVoucher(uint256 nonce, uint256 validUntil, address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external view returns (Voucher memory voucher);
+
+    /**
+     * Build a PermitVoucher from the given parameters
+     *
+     * @param nonce  Nonce to use
+     * @param owner  Permit owner address to use
+     * @param spender  Permit spender address to use
+     * @param value  Permit amount to use
+     * @param deadline  Permit deadline to use
+     * @param v  Permit's signature "v" component to use
+     * @param r  Permit's signature "r" component to use
+     * @param s  Permit's signature "s" component to use
+     * @return voucher  The generated voucher
+     */
+    function buildPermitVoucher(uint256 nonce, address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s) external view returns (Voucher memory voucher);
 }
