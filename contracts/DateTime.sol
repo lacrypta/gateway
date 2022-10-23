@@ -33,6 +33,28 @@ struct DateTimeParts {
 }
 
 /**
+ * Raised upon finding a timezone offset smaller than -48
+ *
+ * @param tzOffset  The offending timezone offset
+ */
+error TimezoneOffsetTooSmall(Quarters tzOffset);
+
+/**
+ * Raised upon finding a timezone offset greater than 56
+ *
+ * @param tzOffset  The offending timezone offset
+ */
+error TimezoneOffsetTooBig(Quarters tzOffset);
+
+/**
+ * Raised upon finding an epoch value below the absolute value of the given timezone offset
+ *
+ * @param epoch  The offending epoch value
+ * @param tzOffset  The offending timezone offset
+ */
+error EpochTimeTooSmallForTimezoneOffset(Epoch epoch, Quarters tzOffset);
+
+/**
  * Extract the date/time components from the given epoch value
  *
  * @param value  The value to extract components from
@@ -53,14 +75,20 @@ function dateTimeParts(Epoch value) pure returns (DateTimeParts memory) {
  */
 function dateTimeParts(Epoch value, Quarters tzOffset) pure returns (DateTimeParts memory) {
     unchecked {
-        require(-48 <= Quarters.unwrap(tzOffset), "Strings: timezone offset too small");
-        require(Quarters.unwrap(tzOffset) <= 56, "Strings: timezone offset too big");
+        if (Quarters.unwrap(tzOffset) < -48) {
+            revert TimezoneOffsetTooSmall(tzOffset);
+        }
+        if (56 < Quarters.unwrap(tzOffset)) {
+            revert TimezoneOffsetTooBig(tzOffset);
+        }
 
         DateTimeParts memory result;
 
         int256 tzOffsetInSeconds = int256(Quarters.unwrap(tzOffset)) * 900;
         if (tzOffsetInSeconds < 0) {
-            require(uint256(-tzOffsetInSeconds) <= Epoch.unwrap(value), "Strings: epoch time too small for timezone offset");
+            if (Epoch.unwrap(value) < uint256(-tzOffsetInSeconds)) {
+                revert EpochTimeTooSmallForTimezoneOffset(value, tzOffset);
+            }
             result.epoch = Epoch.unwrap(value) - uint256(-tzOffsetInSeconds);
         } else {
             result.epoch = Epoch.unwrap(value) + uint256(tzOffsetInSeconds);
