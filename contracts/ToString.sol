@@ -603,6 +603,13 @@ library ToString {
     }
 
     /**
+     * Raised upon finding an epoch value that will not fit in 4 characters
+     *
+     * @param epoch  The offending epoch value
+     */
+    error EpochTimeTooBig(uint256 epoch);
+
+    /**
      * Convert the given epoch value to ISO8601 format (ie. "0000-00-00T00:00:00+00:00")
      *
      * @param value  The value to convert to string
@@ -614,7 +621,9 @@ library ToString {
             bytes10 DEC_DIGITS = "0123456789";
 
             DateTimeParts memory parts = dateTimeParts(value, tzOffset);
-            require(parts.epoch <= 253402311599, "Strings: epoch time too big");
+            if (253402311599 < parts.epoch) {
+                revert EpochTimeTooBig(parts.epoch);
+            }
 
             bytes memory buffer = "0000-00-00T00:00:00";
 
