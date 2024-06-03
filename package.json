@@ -39,7 +39,7 @@
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.14.0",
-    "chai": "^4.3.7",
+    "chai": "^4.4.1",
     "ethers": "^5.7.2",
     "hardhat": "^2.12.6",
     "hardhat-gas-reporter": "^1.0.9",
